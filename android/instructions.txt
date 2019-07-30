@@ -1,0 +1,6 @@
+
+## Use this folder to push you android code inside of it
+
+- create a fork from this repo https://github.com/Moumene/yassir_mobile
+- clone it on your machine (get the clone url from your fork, go to your terminal and execute this cmd git clone url)
+- push your code 
