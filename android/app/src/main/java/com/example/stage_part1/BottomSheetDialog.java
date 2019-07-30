@@ -1,15 +1,24 @@
 package com.example.stage_part1;
 
+import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.CalendarContract.*;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +28,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TimePicker;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import static android.content.Context.ALARM_SERVICE;
+import static android.support.v4.content.ContextCompat.getSystemService;
 
 public class BottomSheetDialog extends BottomSheetDialogFragment {
      private EditText dateedit;
@@ -60,13 +75,12 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
             public void onClick(View v) {
                 if ((timeedit.getText().toString()!="") && (dateedit.getText().toString()!="")){
 
-
                     year =2019;
                     month=8;
                     day=20;
                     hour=14;
                     minute=20;
-                    addAlarmEvent(year,month,day,hour,minute);
+                    addNotif(year,month,day,hour,minute);
 
 
                     ImageButton imgbtn = ((resaDetails)getActivity()).alarmBtn;
@@ -81,30 +95,47 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
     }
 
-    private void addAlarmEvent(int year,int month, int day,int hour,int minute) {
-        long calID = 3;
-        long startMillis = 0;
-        long endMillis = 0;
-        Calendar beginTime = Calendar.getInstance();
-        beginTime.set(year, month, day, hour, minute);
-        startMillis = beginTime.getTimeInMillis();
-        Calendar endTime = Calendar.getInstance();
-        endTime.set(year, month, day, hour, minute+10);
-        endMillis = endTime.getTimeInMillis();
+    private void addNotif(int year,int month, int day,int hour,int minute) {
+        Date date = new Date();
+
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),"5")
+                .setSmallIcon(R.drawable.ic_star_black_24dp)
+                .setContentTitle("Rappel de Réservation")
+                .setContentText("Vous avez un trajet entre Said Hamdin -kouba")
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("Vous avez un trajet entre Said Hamdin -kouba avec monsieur Moumen Moumen"))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+        Intent intent = new Intent(getActivity(),resaDetails.class);
+        PendingIntent activity = PendingIntent.getActivity(getActivity(),001,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+        builder.setContentIntent(activity);
+
+        Notification notification = builder.build();
+
+        Intent notificationIntent = new Intent(getActivity(), NotificationPublisher.class);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 001);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 001, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        Calendar Current = Calendar.getInstance();
+
+        Calendar calender = Calendar.getInstance();
+
+        calender.set(year,month,day,hour,minute);
 
 
 
-        ContentResolver cr =  resaDetails.getContextApp().getContentResolver();
-        ContentValues values = new ContentValues();
-        values.put(Events.DTSTART, startMillis);
-        values.put(Events.DTEND, endMillis);
-        values.put(Events.TITLE, "Trip");
-        values.put(Events.DESCRIPTION, "Trip to bouismail");
-        values.put(Events.CALENDAR_ID, calID);
-        Uri uri = cr.insert(Events.CONTENT_URI, values);
 
-        //long eventID = Long.parseLong(uri.getLastPathSegment());
+        long futureInMillis = calender.getTimeInMillis()-Current.getTimeInMillis();
+
+        // SystemClock.elapsedRealtime() +10;
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,futureInMillis, pendingIntent);
+
+
     }
+
 
     private void showTimePicker() {
         TimePickerFragment time = new TimePickerFragment();
