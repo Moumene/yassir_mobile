@@ -12,10 +12,10 @@ import CoreLocation
 import MapKit
 class ViewController: UIViewController,UNUserNotificationCenterDelegate {
 
-    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var dateView: UIView!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var heureLabel: UILabel!
-    @IBOutlet weak var heureView: UIView!
+    //@IBOutlet weak var heureView: UIView!
     @IBOutlet weak var notifIcon: UIImageView!
     
     @IBOutlet weak var userImage: UIImageView!
@@ -35,22 +35,18 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
     override func viewDidLoad() {
         self.dateLabel.cornerRadius(usingCorners: [.topLeft,.bottomLeft], cornerRadii:CGSize(width : 20,height : 20))
         
-        self.dateView.cornerRadius(usingCorners: [.topLeft,.bottomLeft], cornerRadii:CGSize(width : 20,height : 20))
-        self.dateView.layer.shadowPath = UIBezierPath(roundedRect: self.dateView.bounds,
+        self.dateView.layer.shadowPath =
+            UIBezierPath(roundedRect: self.dateView.bounds,
                          cornerRadius: self.dateView.layer.cornerRadius).cgPath
         self.dateView.layer.shadowColor = UIColor.gray.cgColor
         self.dateView.layer.shadowOpacity = 0.5
         self.dateView.layer.shadowOffset = CGSize(width:0, height: 0)
         self.dateView.layer.shadowRadius = 10
         self.dateView.layer.masksToBounds = false
-        self.dateView.layer.shouldRasterize = true
-        self.dateView.layer.rasterizationScale = UIScreen.main.scale
-
 
         
         self.heureLabel.cornerRadius(usingCorners: [.topRight,.bottomRight], cornerRadii:CGSize(width : 20,height : 20))
-     
-        self.heureView.cornerRadius(usingCorners: [.topRight,.bottomRight], cornerRadii:CGSize(width : 20,height : 20))
+
 //        self.heureView.layer.shadowPath = UIBezierPath(roundedRect: self.heureView.bounds,
 //                         cornerRadius: self.heureView.layer.cornerRadius).cgPath
 //        self.heureView.layer.shadowColor = UIColor.gray.cgColor
@@ -58,8 +54,8 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
 //        self.heureView.layer.shadowOffset = CGSize(width:0, height: 0)
 //        self.heureView.layer.shadowRadius = 10
 //        self.heureView.layer.masksToBounds = false
-//        //self.heureView.layer.shouldRasterize = true
-//        //self.heureView.layer.rasterizationScale = UIScreen.main.scale
+        //self.heureView.layer.shouldRasterize = true
+        //self.heureView.layer.rasterizationScale = UIScreen.main.scale
         
         
         self.callButton.cornerRadius(usingCorners: [.allCorners],
@@ -107,12 +103,14 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
         
         
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willEnterForegroundNotification, object: nil)
+
         self.notifIcon.isHidden = true
         self.notif=false
         let center = UNUserNotificationCenter.current()
         center.getPendingNotificationRequests(completionHandler: { requests in
             for request in requests {
-                if (request.identifier == "test_rappel"){
+                if (request.identifier == "dateView_rappel"){
                     self.notifIcon.isHidden = false
                     self.notif=true
                 }
@@ -127,6 +125,19 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
                 print("No")
             }
         }
+    }
+    @objc func willResignActive(_ notification: Notification) {
+        self.notifIcon.isHidden = true
+        self.notif=false
+        let center = UNUserNotificationCenter.current()
+        center.getPendingNotificationRequests(completionHandler: { requests in
+            for request in requests {
+                if (request.identifier == "dateView_rappel"){
+                    self.notifIcon.isHidden = false
+                    self.notif=true
+                }
+            }
+        })
     }
     
     //fonction de retour
@@ -214,7 +225,7 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
                         print(triggerDate)
                         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
                         //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
-                        let identifier = "test_rappel"
+                        let identifier = "dateView_rappel"
                         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
                         // 4
                         self.request=request
@@ -231,7 +242,7 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
             let alert = UIAlertController(title: "Suprimer l'alarme ?", message: "Êtes-vous sûr de vouloir supprimer définitivement l’alarme ?", preferredStyle: .alert)
         
             alert.addAction(UIAlertAction(title: "Supprimer", style: .destructive,handler : { (action) -> Void in
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["test_rappel"])
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["dateView_rappel"])
                 self.dateNotif = nil
                 self.notif = false
                 self.notifIcon.isHidden = true

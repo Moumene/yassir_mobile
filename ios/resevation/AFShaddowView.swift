@@ -1,12 +1,3 @@
-//
-//  AFShaddowView.swift
-//  resevation
-//
-//  Created by mac on 7/31/19.
-//  Copyright © 2019 alaa. All rights reserved.
-//
-
-
 import UIKit
 
 class AFShadowView: UIView {
@@ -19,8 +10,13 @@ class AFShadowView: UIView {
     
     var cornerRadius: CGFloat?
     var shadowOffset = CGSize(width: 0, height: 2)
-    var shadowRadius: CGFloat = 8
-    var shadowOpacity: Float = 0.15
+    var shadowRadius: CGFloat = 4
+    var shadowOpacity: Float = 1
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.cornerRadius = 8
+    }
     
     init(cornerRadius: CGFloat) {
         super.init(frame: .zero)
@@ -28,7 +24,8 @@ class AFShadowView: UIView {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        self.cornerRadius = 8
     }
     
     private func setupShadow() {
