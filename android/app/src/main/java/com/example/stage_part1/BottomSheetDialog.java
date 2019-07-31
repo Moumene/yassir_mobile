@@ -78,8 +78,8 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
                     year =2019;
                     month=7;
                     day=31;
-                    hour=9;
-                    minute=33;
+                    hour=10;
+                    minute=54;
                     addNotif(year,month,day,hour,minute);
 
 
@@ -129,13 +129,12 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         Date j  = Current.getTime();
 
 
-        long futureInMillis = calender.getTimeInMillis();
+        long futureInMillis = calender.getTimeInMillis()-Current.getTimeInMillis();
 
         // SystemClock.elapsedRealtime() +10;
         AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
 
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,futureInMillis, pendingIntent);
-
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,calender.getTimeInMillis(), pendingIntent);
 
     }
 

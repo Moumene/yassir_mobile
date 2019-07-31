@@ -1,7 +1,9 @@
 package com.example.stage_part1;
 
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -83,10 +85,12 @@ public class resaDetails extends AppCompatActivity {
 
             btn_supp_alarm.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    CancelAlarm();
                     ImageButton imgbtn = findViewById(R.id.bell_btn);
                     imgbtn.setImageResource(R.drawable.baseline_notifications_white_24dp);
                     isAlarmConfigured = false;
                     alertD.cancel();
+
                 }
             });
 
@@ -121,6 +125,7 @@ public class resaDetails extends AppCompatActivity {
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
+
     }
     public void onClickCall(View v)
     {
@@ -128,6 +133,14 @@ public class resaDetails extends AppCompatActivity {
         callIntent.setData(Uri.parse("tel:0551573525"));
         startActivity(callIntent);
 
+    }
+    public void CancelAlarm(){
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent myIntent = new Intent(getApplicationContext(), NotificationPublisher.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                getApplicationContext(), 001, myIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(pendingIntent);
     }
 
 
