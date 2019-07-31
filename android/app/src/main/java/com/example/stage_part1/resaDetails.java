@@ -105,14 +105,19 @@ public class resaDetails extends AppCompatActivity {
     }
     public void location_btn_1_click(View v)
     {
-        Uri gmmIntentUri = Uri.parse("google.navigation:q=Alger");
+
+        String source = "Yassir";
+        String destination = "Said Hamdine";
+        Uri gmmIntentUri = Uri.parse("https://www.google.com/maps/dir/?api=1&origin="+ source + "&destination="+destination+"&travelmode=car");
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
     }
     public void location_btn_2_click(View v)
     {
-        Uri gmmIntentUri = Uri.parse("google.navigation:q=Bouismail");
+        String source = "Yassir";
+        String destination = "Kouba";
+        Uri gmmIntentUri = Uri.parse("https://www.google.com/maps/dir/?api=1&origin="+ source + "&destination="+destination+"&travelmode=car");
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);

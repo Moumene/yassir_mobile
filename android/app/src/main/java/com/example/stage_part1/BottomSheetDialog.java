@@ -76,10 +76,10 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
                 if ((timeedit.getText().toString()!="") && (dateedit.getText().toString()!="")){
 
                     year =2019;
-                    month=8;
-                    day=20;
-                    hour=14;
-                    minute=20;
+                    month=7;
+                    day=31;
+                    hour=9;
+                    minute=33;
                     addNotif(year,month,day,hour,minute);
 
 
@@ -122,15 +122,18 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
         Calendar calender = Calendar.getInstance();
 
-        calender.set(year,month,day,hour,minute);
+        calender.set(year,month-1,day,hour,minute);
+
+        //DEBUGGING
+        Date i  = calender.getTime();
+        Date j  = Current.getTime();
 
 
-
-
-        long futureInMillis = calender.getTimeInMillis()-Current.getTimeInMillis();
+        long futureInMillis = calender.getTimeInMillis();
 
         // SystemClock.elapsedRealtime() +10;
         AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,futureInMillis, pendingIntent);
 
 

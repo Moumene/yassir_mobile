@@ -9,7 +9,6 @@
     >
 
 
-    <!--wxwx-->
     <ImageButton
         android:id="@+id/bell_btn"
         android:layout_width="wrap_content"

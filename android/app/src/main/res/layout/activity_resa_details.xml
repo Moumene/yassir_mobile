@@ -310,7 +310,7 @@
                                     android:id="@+id/location_btn_2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:onClick="Onclick_alarm"
+                                    android:onClick="location_btn_2_click"
                                     android:layout_weight="1"
                                     android:clickable="true"
                                     app:backgroundTint="#2F7CF6"
