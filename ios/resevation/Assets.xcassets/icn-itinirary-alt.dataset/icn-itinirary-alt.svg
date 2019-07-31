@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>Icons/Map/icn-itinirary-alt</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Icons/Map/icn-itinirary-alt" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="base" points="0 0 24 0 24 24 0 24"></polygon>
+        <path d="M11,13 L3,13 C1.91671315,13 1.60671998,11.5180444 2.59918117,11.0838427 L18.5991812,4.08384267 C19.4329204,3.71908177 20.2809182,4.56707965 19.9161573,5.40081883 L12.9161573,21.4008188 C12.4819556,22.39328 11,22.0832868 11,21 L11,13 Z" id="Icon" fill="#1B1B1B"></path>
+    </g>
+</svg>

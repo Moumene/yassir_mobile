@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>Icons/Communication/icn-notification-alt</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Icons/Communication/icn-notification-alt" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="base" points="0 0 24 0 24 24 0 24"></polygon>
+        <path d="M19,16 L21,16 L21,18 L3,18 L3,16 L5,16 L5,11 C5,7.73441396 7.23614523,4.99110763 10.2607417,4.21777502 L11,2 L13,2 L13.7392583,4.21777502 C16.7638548,4.99110763 19,7.73441396 19,11 L19,16 Z M12,22 C10.3431458,22 9,20.6568542 9,19 L15,19 C15,20.6568542 13.6568542,22 12,22 Z" id="Icon" fill="#1B1B1B"></path>
+    </g>
+</svg>
