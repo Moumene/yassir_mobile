@@ -132,7 +132,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
         Calendar calender = Calendar.getInstance();
 
-        calender.set(year,month-1,day,hour,minute);
+        calender.set(year,month,day,hour,minute);
 
         //DEBUGGING
         Date i  = calender.getTime();
