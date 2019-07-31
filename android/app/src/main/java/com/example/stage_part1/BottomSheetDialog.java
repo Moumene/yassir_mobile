@@ -75,11 +75,6 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
             public void onClick(View v) {
                 if ((timeedit.getText().toString()!="") && (dateedit.getText().toString()!="")){
 
-//                    year =2019;
-//                    month=7;
-//                    day=31;
-//                    hour=10;
-//                    minute=54;
                     addNotif(year,month,day,hour,minute);
 
 
@@ -120,6 +115,8 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
                         .bigText("Vous avez un trajet entre Said Hamdin -kouba avec monsieur Moumen Moumen"))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
+        //Vibration
+        builder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
         Intent intent = new Intent(getActivity(),resaDetails.class);
         PendingIntent activity = PendingIntent.getActivity(getActivity(),001,intent,PendingIntent.FLAG_CANCEL_CURRENT);
         builder.setContentIntent(activity);
