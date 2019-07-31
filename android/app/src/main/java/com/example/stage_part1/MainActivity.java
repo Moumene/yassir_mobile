@@ -25,6 +25,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private int i = 2;
-    private char c = 'c';
 }

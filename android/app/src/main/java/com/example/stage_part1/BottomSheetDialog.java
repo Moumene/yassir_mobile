@@ -75,11 +75,11 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
             public void onClick(View v) {
                 if ((timeedit.getText().toString()!="") && (dateedit.getText().toString()!="")){
 
-                    year =2019;
-                    month=7;
-                    day=31;
-                    hour=10;
-                    minute=54;
+//                    year =2019;
+//                    month=7;
+//                    day=31;
+//                    hour=10;
+//                    minute=54;
                     addNotif(year,month,day,hour,minute);
 
 
@@ -95,9 +95,22 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
     }
 
+    private Calendar getSetTime(){
+
+        String timeString = timeedit.getText().toString();
+        String[] separatedTime = timeString.split(":");
+        hour = Integer.parseInt(separatedTime[0]);
+        minute = Integer.parseInt(separatedTime[1]);
+
+
+        return  null;
+    }
+
+
     private void addNotif(int year,int month, int day,int hour,int minute) {
         Date date = new Date();
 
+        getSetTime();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),"5")
                 .setSmallIcon(R.drawable.ic_star_black_24dp)
@@ -155,8 +168,10 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
     TimePickerDialog.OnTimeSetListener ontime = new TimePickerDialog.OnTimeSetListener() {
         @Override
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            timeedit.setText(String.valueOf(hourOfDay)+":"+String.valueOf(minute));
+        public void onTimeSet(TimePicker view, int hourOfDay, int minutee) {
+            timeedit.setText(String.valueOf(hourOfDay)+":"+String.valueOf(minutee));
+            hour = hourOfDay;
+            minute = minutee;
         }
     };
     private void showDatePicker() {
@@ -179,11 +194,15 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
     DatePickerDialog.OnDateSetListener ondate = new DatePickerDialog.OnDateSetListener() {
 
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
+        public void onDateSet(DatePicker view, int yearr, int monthOfYear,
                               int dayOfMonth) {
 
            dateedit.setText(String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear+1)
-                    + "/" + String.valueOf(year));
+                    + "/" + String.valueOf(yearr));
+
+           year = yearr;
+           month = monthOfYear;
+           day = dayOfMonth;
         }
     };
 
