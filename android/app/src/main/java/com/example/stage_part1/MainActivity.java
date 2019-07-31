@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             intent.setData(Uri.parse("package:" + packageName));
             startActivity(intent);
         }
-
+//
         Button nBtn = (Button) findViewById(R.id.btn);
         nBtn.setOnClickListener(new View.OnClickListener() {
             @Override
