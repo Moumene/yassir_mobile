@@ -27,6 +27,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
@@ -75,14 +76,26 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
             public void onClick(View v) {
                 if ((timeedit.getText().toString()!="") && (dateedit.getText().toString()!="")){
 
-                    addNotif(year,month,day,hour,minute);
+                    Calendar c = Calendar.getInstance();
+                    c.set(year,month,day,hour,minute);
+
+                    if (!c.before(Calendar.getInstance())){
+                        addNotif(year,month,day,hour,minute);
 
 
-                    ImageButton imgbtn = ((resaDetails)getActivity()).alarmBtn;
-                    imgbtn.setImageResource(R.drawable.alarm_icon_configured_white);
+                        ImageButton imgbtn = ((resaDetails)getActivity()).alarmBtn;
+                        imgbtn.setImageResource(R.drawable.alarm_icon_configured_white);
 
-                    resaDetails.isAlarmConfigured = true;
-                    dismiss();
+                        resaDetails.isAlarmConfigured = true;
+                        dismiss();
+                    }
+                    else {
+                        Toast toast = Toast.makeText(getActivity(),
+                                "Veuillez entrer une date valide",
+                                Toast.LENGTH_SHORT);
+
+                        toast.show();
+                    }
                 }
 
             }
@@ -176,6 +189,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         /**
          * Set Up Current Date Into dialog
          */
+
         Calendar calender = Calendar.getInstance();
         Bundle args = new Bundle();
         args.putInt("year", calender.get(Calendar.YEAR));
