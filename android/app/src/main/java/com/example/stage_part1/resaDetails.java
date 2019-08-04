@@ -41,8 +41,6 @@ public class resaDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         contextApp = getApplicationContext();
-        isAlarmConfigured=IsAalrmSet();
-        SaveAlarmConfig();
         setContentView(R.layout.activity_resa_details);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
@@ -54,7 +52,8 @@ public class resaDetails extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         alarmBtn = findViewById(R.id.bell_btn);
-
+            isAlarmConfigured = IsAalrmSet();
+            SaveAlarmConfig();
        // LoadAlarmConfig();
         if (isAlarmConfigured)
             alarmBtn.setImageResource(R.drawable.alarm_configured_fixed);

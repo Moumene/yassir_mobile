@@ -136,6 +136,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         PendingIntent activity = PendingIntent.getActivity(getActivity(),001,intent,PendingIntent.FLAG_CANCEL_CURRENT);
         builder.setContentIntent(activity);
 
+
         Notification notification = builder.build();
 
         Intent notificationIntent = new Intent(getActivity(), NotificationPublisher.class);
@@ -159,7 +160,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         // SystemClock.elapsedRealtime() +10;
         AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
 
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP,calender.getTimeInMillis(), pendingIntent);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,calender.getTimeInMillis(), pendingIntent);
 
     }
 
