@@ -7,7 +7,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,6 +38,7 @@ public class resaDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resa_details);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
 
         toolbar.setTitle("Détails de la Réservation");
@@ -48,8 +51,11 @@ public class resaDetails extends AppCompatActivity {
 
         contextApp = getApplicationContext();
 
-    }
+        LoadAlarmConfig();
+        if (isAlarmConfigured)
+            alarmBtn.setImageResource(R.drawable.alarm_configured_fixed);
 
+    }
 
 
     public static Context getContextApp(){
@@ -62,17 +68,28 @@ public class resaDetails extends AppCompatActivity {
         return true;
     }
 
-
+    public static void SaveAlarmConfig(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(contextApp);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("NOTIF_ID", 001);
+        editor.putBoolean("IS_ALARM_CONFIGURED",isAlarmConfigured);
+        editor.commit();
+    }
+    public static void LoadAlarmConfig(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(contextApp);
+        isAlarmConfigured = sharedPreferences.getBoolean("IS_ALARM_CONFIGURED", false);
+        System.out.println("\n"+isAlarmConfigured+"\n");
+    }
 
     public void Onclick_alarm(View v)
     {
 
-        if (!isAlarmConfigured) {
+        if (!isAlarmConfigured) {//Bottom sheet ajouter alarme
             BottomSheetDialog bottomSheet = new BottomSheetDialog();
             bottomSheet.show(getSupportFragmentManager(),"BottomSheet");
 
         }
-        else {
+        else {//Popup supprimer notif
 
             LayoutInflater layoutInflater = LayoutInflater.from(this);
             View promptView = layoutInflater.inflate(R.layout.alert_promt, null);
@@ -89,6 +106,7 @@ public class resaDetails extends AppCompatActivity {
                     ImageButton imgbtn = findViewById(R.id.bell_btn);
                     imgbtn.setImageResource(R.drawable.baseline_notifications_white_24dp);
                     isAlarmConfigured = false;
+                    SaveAlarmConfig();
                     alertD.cancel();
 
                 }
@@ -109,7 +127,6 @@ public class resaDetails extends AppCompatActivity {
     }
     public void location_btn_1_click(View v)
     {
-
         String source = "Yassir";
         String destination = "Said Hamdine";
         Uri gmmIntentUri = Uri.parse("https://www.google.com/maps/dir/?api=1&origin="+ source + "&destination="+destination+"&travelmode=car");
@@ -117,6 +134,7 @@ public class resaDetails extends AppCompatActivity {
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
     }
+
     public void location_btn_2_click(View v)
     {
         String source = "Yassir";
@@ -125,15 +143,14 @@ public class resaDetails extends AppCompatActivity {
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
-
     }
     public void onClickCall(View v)
     {
         Intent callIntent = new Intent(Intent.ACTION_DIAL);
         callIntent.setData(Uri.parse("tel:0551573525"));
         startActivity(callIntent);
-
     }
+
     public void CancelAlarm(){
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent myIntent = new Intent(getApplicationContext(), NotificationPublisher.class);
@@ -142,8 +159,5 @@ public class resaDetails extends AppCompatActivity {
                 PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
     }
-
-
-
 
 }

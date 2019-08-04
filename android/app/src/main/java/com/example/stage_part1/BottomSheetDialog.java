@@ -88,6 +88,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
                         imgbtn.setImageResource(R.drawable.alarm_configured_fixed);
                         imgbtn.setScaleType(ImageView.ScaleType.CENTER);
                         resaDetails.isAlarmConfigured = true;
+                        resaDetails.SaveAlarmConfig();
                         dismiss();
                     }
                     else {
