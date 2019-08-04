@@ -75,6 +75,10 @@
                                             <action selector="pop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aeK-Xy-tvM"/>
                                         </connections>
                                     </button>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checked" translatesAutoresizingMaskIntoConstraints="NO" id="eYd-2L-LG0">
+                                        <rect key="frame" x="343" y="39" width="16" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VGU-As-UC4">
                                         <rect key="frame" x="331" y="28" width="24" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
@@ -83,10 +87,6 @@
                                             <action selector="ajouterNotif:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BdI-Ga-lT7"/>
                                         </connections>
                                     </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checked" translatesAutoresizingMaskIntoConstraints="NO" id="eYd-2L-LG0">
-                                        <rect key="frame" x="343" y="39" width="16" height="16"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                 <constraints>
@@ -94,7 +94,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pxl-8J-oe1">
-                                <rect key="frame" x="60" y="110" width="256" height="35"/>
+                                <rect key="frame" x="59.5" y="110" width="256" height="35"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="19 Novembre 2018" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PMg-LL-hrm">
                                         <rect key="frame" x="-1" y="0.0" width="180" height="35"/>
@@ -209,7 +209,7 @@
                                         <color key="tintColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Kouba" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIk-SA-6tU">
-                                        <rect key="frame" x="85" y="120" width="47" height="18"/>
+                                        <rect key="frame" x="84" y="120" width="47" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <nil key="textColor"/>
@@ -347,6 +347,7 @@
                         <outlet property="heureLabel" destination="GCI-kp-2Rh" id="xQw-1F-AC8"/>
                         <outlet property="idView" destination="mAl-DS-Hk2" id="Ez7-eV-0YX"/>
                         <outlet property="informationButton" destination="708-AQ-fKv" id="TGV-FX-uYH"/>
+                        <outlet property="navigtionView" destination="3h9-vt-n7l" id="m3w-Fc-BFM"/>
                         <outlet property="notifButton" destination="VGU-As-UC4" id="l0g-ee-t3i"/>
                         <outlet property="notifIcon" destination="eYd-2L-LG0" id="mZg-Xx-eC4"/>
                         <outlet property="passagerView" destination="8ik-IY-Wo4" id="cBp-ZL-Iar"/>

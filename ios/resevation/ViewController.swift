@@ -12,6 +12,7 @@ import CoreLocation
 import MapKit
 class ViewController: UIViewController,UNUserNotificationCenterDelegate {
 
+    @IBOutlet weak var navigtionView: UIView!
     @IBOutlet weak var dateView: UIView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var heureLabel: UILabel!
@@ -33,6 +34,9 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
 
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+        UNUserNotificationCenter.current().delegate = self
+
         self.dateLabel.cornerRadius(usingCorners: [.topLeft,.bottomLeft], cornerRadii:CGSize(width : 20,height : 20))
         
         self.dateView.layer.shadowPath =
@@ -44,78 +48,26 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
         self.dateView.layer.shadowRadius = 10
         self.dateView.layer.masksToBounds = false
 
-        
         self.heureLabel.cornerRadius(usingCorners: [.topRight,.bottomRight], cornerRadii:CGSize(width : 20,height : 20))
-
-//        self.heureView.layer.shadowPath = UIBezierPath(roundedRect: self.heureView.bounds,
-//                         cornerRadius: self.heureView.layer.cornerRadius).cgPath
-//        self.heureView.layer.shadowColor = UIColor.gray.cgColor
-//        self.heureView.layer.shadowOpacity = 0.5
-//        self.heureView.layer.shadowOffset = CGSize(width:0, height: 0)
-//        self.heureView.layer.shadowRadius = 10
-//        self.heureView.layer.masksToBounds = false
-        //self.heureView.layer.shouldRasterize = true
-        //self.heureView.layer.rasterizationScale = UIScreen.main.scale
-        
-        
         self.callButton.cornerRadius(usingCorners: [.allCorners],
             cornerRadii:CGSize(width : 10,height : 10))
         self.informationButton.cornerRadius(usingCorners: [.allCorners],
             cornerRadii:CGSize(width : 20,height : 20))
         
-        self.passagerView.layer.shadowPath =
-            UIBezierPath(roundedRect: self.passagerView.bounds,
-                         cornerRadius: self.passagerView.layer.cornerRadius).cgPath
-        self.passagerView.layer.shadowColor = UIColor.gray.cgColor
-        self.passagerView.layer.shadowOpacity = 0.3
-        self.passagerView.layer.shadowOffset = CGSize(width:0, height: 0)
-        self.passagerView.layer.shadowRadius = 2
-        self.passagerView.layer.masksToBounds = false
+        self.passagerView.setShadow()
         
-        self.trajetView.layer.shadowPath =
-            UIBezierPath(roundedRect: self.trajetView.bounds,
-                         cornerRadius: self.trajetView.layer.cornerRadius).cgPath
-        self.trajetView.layer.shadowColor = UIColor.gray.cgColor
-        self.trajetView.layer.shadowOpacity = 0.3
-        self.trajetView.layer.shadowOffset = CGSize(width:0, height: 0)
-        self.trajetView.layer.shadowRadius = 2
-        self.trajetView.layer.masksToBounds = false
+        self.trajetView.setShadow() 
 
-        self.sommeView.layer.shadowPath =
-            UIBezierPath(roundedRect: self.sommeView.bounds,
-                         cornerRadius: self.sommeView.layer.cornerRadius).cgPath
-        self.sommeView.layer.shadowColor = UIColor.gray.cgColor
-        self.sommeView.layer.shadowOpacity = 0.3
-        self.sommeView.layer.shadowOffset = CGSize(width:0, height: 0)
-        self.sommeView.layer.shadowRadius = 2
-        self.sommeView.layer.masksToBounds = false
+        self.sommeView.setShadow()
 
-        self.idView.layer.shadowPath =
-            UIBezierPath(roundedRect: self.idView.bounds,
-                         cornerRadius: self.idView.layer.cornerRadius).cgPath
-        self.idView.layer.shadowColor = UIColor.gray.cgColor
-        self.idView.layer.shadowOpacity = 0.3
-        self.idView.layer.shadowOffset = CGSize(width:0, height: 0)
-        self.idView.layer.shadowRadius = 2
-        self.idView.layer.masksToBounds = false
+        self.idView.setShadow()
         
         
+        updateNotif()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateNotif), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         
-        super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willEnterForegroundNotification, object: nil)
-
-        self.notifIcon.isHidden = true
-        self.notif=false
-        let center = UNUserNotificationCenter.current()
-        center.getPendingNotificationRequests(completionHandler: { requests in
-            for request in requests {
-                if (request.identifier == "dateView_rappel"){
-                    self.notifIcon.isHidden = false
-                    self.notif=true
-                }
-            }
-        })
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) {
             (granted, error) in
@@ -126,17 +78,41 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
             }
         }
     }
-    @objc func willResignActive(_ notification: Notification) {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("cnvngvh")
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        //xlet content = notification.request.content
+        //print("Test: \(notification.request.identifier)")
+        if (notification.request.identifier == "dateView_rappel"){
+            self.notifIcon.isHidden = true
+            self.notif=false
+        }
+        
+        completionHandler([.alert, .sound]) // Display notification as regular alert and play sound
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        //print("Test: \(response.notification.request.identifier)")
+//        if (response.notification.request.identifier == "dateView_rappel"){
+//            self.notifIcon.isHidden = true
+//            self.notif=false
+//        }
+    }
+    
+    @objc func updateNotif() {
         self.notifIcon.isHidden = true
         self.notif=false
         let center = UNUserNotificationCenter.current()
         center.getPendingNotificationRequests(completionHandler: { requests in
             for request in requests {
                 if (request.identifier == "dateView_rappel"){
-                    self.notifIcon.isHidden = false
                     self.notif=true
                 }
             }
+            self.notifIcon.isHidden = !self.notif
         })
     }
     
@@ -263,5 +239,17 @@ extension UIView {
         maskLayer.path=path.cgPath
         self.layer.mask = maskLayer
     }
+    
+    func setShadow() {
+        self.layer.shadowPath =
+            UIBezierPath(roundedRect: self.bounds,
+                         cornerRadius: self.layer.cornerRadius).cgPath
+        self.layer.shadowColor = UIColor.gray.cgColor
+        self.layer.shadowOpacity = 0.3
+        self.layer.shadowOffset = CGSize(width:0, height: 0)
+        self.layer.shadowRadius = 2
+        self.layer.masksToBounds = false
+    }
 }
+
 
