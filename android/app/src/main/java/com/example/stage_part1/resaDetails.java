@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
@@ -24,8 +25,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.stage_part1.databinding.ActivityResaDetailsBinding;
+import com.example.stage_part1.model.Passager;
+import com.example.stage_part1.model.Trip;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class resaDetails extends AppCompatActivity {
@@ -35,22 +41,36 @@ public class resaDetails extends AppCompatActivity {
     public ImageButton alarmBtn;
     public static boolean isAlarmConfigured = false;
 
+    //data binding
+    ActivityResaDetailsBinding mBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
         contextApp = getApplicationContext();
-        setContentView(R.layout.activity_resa_details);
 
+        //Binding stuff
+        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_resa_details);
+
+        Passager moumene = new Passager("Moumen","Moumen",4.5f,R.mipmap.pic,0551573525);
+        mBinding.setPassager(moumene);
+
+
+        Calendar dateheureTrip = Calendar.getInstance();
+        dateheureTrip.set(2018,11,12,19,30);
+
+        mBinding.setTrip(new Trip(moumene,dateheureTrip,"Said Hamdine","Chemin de Yassir, Bir Mourad Rais","Kouba","Chemin de Yassir, Bir Mourad Rais",2000,"X321EQVC1"));
+
+        //toolbar settings
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
-
         toolbar.setTitle("Détails de la Réservation");
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        //Alarm Button init
         alarmBtn = findViewById(R.id.bell_btn);
             isAlarmConfigured = IsAalrmSet();
             SaveAlarmConfig();

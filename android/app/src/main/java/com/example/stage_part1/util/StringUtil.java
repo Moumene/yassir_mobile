@@ -1,5 +1,7 @@
 package com.example.stage_part1.util;
 
+import com.example.stage_part1.model.Trip;
+
 import java.util.Calendar;
 
 public class StringUtil {
@@ -18,5 +20,14 @@ public class StringUtil {
         return String.valueOf(hour) + ":" + String.valueOf(minute);
     }
 
+    public static String getSurnameName(Trip trip){
+        String name = trip.getPassager().getName();
+        String surname = trip.getPassager().getSurname();
+        return surname + " "  + name;
+    }
+
+    public static String getMoneyFormat(long montant){
+        return Long.toString(montant) + "Da";
+    }
 
 }
