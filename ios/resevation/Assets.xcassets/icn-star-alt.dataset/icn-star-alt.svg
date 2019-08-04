@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>Icons/Primary/icn-star-alt</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Icons/Primary/icn-star-alt" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="base" points="0 0 24 0 24 24 0 24"></polygon>
+        <path d="M7.29567209,20.0916524 C6.51392015,20.6566162 5.46431807,19.8965913 5.75712498,18.9775786 L7.54391124,13.3695169 L2.835956,9.79657831 C2.07272432,9.21735023 2.4823537,8 3.44049135,8 L9.27924078,8 L11.0513167,2.68377223 C11.3552155,1.77207592 12.6447845,1.77207592 12.9486833,2.68377223 L14.7207592,8 L20.5595086,8 C21.5176463,8 21.9272757,9.21735023 21.164044,9.79657831 L16.4560888,13.3695169 L18.242875,18.9775786 C18.5356819,19.8965913 17.4860799,20.6566162 16.7043279,20.0916524 L12,16.6918847 L7.29567209,20.0916524 Z" id="Icon" fill="#1B1B1B"></path>
+    </g>
+</svg>
