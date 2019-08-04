@@ -1,5 +1,8 @@
 package com.example.stage_part1.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class Passager {
 
     private String name;
@@ -54,4 +57,5 @@ public class Passager {
     public void setNumTel(long numTel) {
         this.numTel = numTel;
     }
+
 }

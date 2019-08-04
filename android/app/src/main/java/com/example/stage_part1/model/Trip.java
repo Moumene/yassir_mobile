@@ -24,23 +24,6 @@ public class Trip {
     }
 
 
-    public String getDateString(){
-        int dayOfMonth = dateheureTrip.get(Calendar.DAY_OF_MONTH);
-        int monthOfYear = dateheureTrip.get(Calendar.MONTH);
-        int yearr = dateheureTrip.get(Calendar.YEAR);
-        return String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear)
-                + "/" + String.valueOf(yearr);
-    }
-
-    public String getTimeString(){
-        int hour= dateheureTrip.get(Calendar.HOUR);
-        int minute = dateheureTrip.get(Calendar.MINUTE);
-        return String.valueOf(hour) + ":" + String.valueOf(minute);
-    }
-
-
-
-
     public long getMontant() {
         return montant;
     }
