@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
@@ -36,7 +37,12 @@ public class resaDetails extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+        contextApp = getApplicationContext();
+        isAlarmConfigured=IsAalrmSet();
+        SaveAlarmConfig();
         setContentView(R.layout.activity_resa_details);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
@@ -49,9 +55,7 @@ public class resaDetails extends AppCompatActivity {
 
         alarmBtn = findViewById(R.id.bell_btn);
 
-        contextApp = getApplicationContext();
-
-        LoadAlarmConfig();
+       // LoadAlarmConfig();
         if (isAlarmConfigured)
             alarmBtn.setImageResource(R.drawable.alarm_configured_fixed);
 
@@ -158,6 +162,21 @@ public class resaDetails extends AppCompatActivity {
                 getApplicationContext(), 001, myIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
+    }
+    public boolean IsAalrmSet() {
+
+        Intent notificationIntent = new Intent(getApplicationContext(), NotificationPublisher.class);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 001);
+        Intent myIntent = new Intent(getApplicationContext(), NotificationPublisher.class);
+
+        boolean alarmUp =  (PendingIntent.getBroadcast(  getApplicationContext(), 001, myIntent,
+                PendingIntent.FLAG_NO_CREATE)!=null);
+        if (alarmUp) {
+            Log.d("Alarm" ,"set");
+        }
+        else    Log.d("Alarm" ,"not set");
+
+        return alarmUp;
     }
 
 }
