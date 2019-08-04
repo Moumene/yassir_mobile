@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -84,8 +85,8 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
 
                         ImageButton imgbtn = ((resaDetails)getActivity()).alarmBtn;
-                        imgbtn.setImageResource(R.drawable.alarm_icon_configured_white);
-
+                        imgbtn.setImageResource(R.drawable.alarm_configured_fixed);
+                        imgbtn.setScaleType(ImageView.ScaleType.CENTER);
                         resaDetails.isAlarmConfigured = true;
                         dismiss();
                     }

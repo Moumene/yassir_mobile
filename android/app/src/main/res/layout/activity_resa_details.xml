@@ -318,19 +318,9 @@
                                     app:srcCompat="@drawable/ic_near_me_black_24dp" />
 
                             </RelativeLayout>
-
-
                         </LinearLayout>
-
                     </LinearLayout>
-
-
-
                 </LinearLayout>
-
-
-
-
             </android.support.v7.widget.CardView>
 
 
