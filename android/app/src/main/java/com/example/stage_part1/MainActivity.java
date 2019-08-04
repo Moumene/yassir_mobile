@@ -20,16 +20,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M )
-        {
-            Intent intent = new Intent();
-            String packageName = getPackageName();
-            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-            if (!pm.isIgnoringBatteryOptimizations(packageName))
-                intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-            intent.setData(Uri.parse("package:" + packageName));
-            startActivity(intent);
-        }
+//        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M )
+//        {
+//            Intent intent = new Intent();
+//            String packageName = getPackageName();
+//            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+//            if (!pm.isIgnoringBatteryOptimizations(packageName))
+//                intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+//            intent.setData(Uri.parse("package:" + packageName));
+//            startActivity(intent);
+//        }
 //
         Button nBtn = (Button) findViewById(R.id.btn);
         nBtn.setOnClickListener(new View.OnClickListener() {
