@@ -107,12 +107,15 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
         self.notif=false
         let center = UNUserNotificationCenter.current()
         center.getPendingNotificationRequests(completionHandler: { requests in
-            for request in requests {
-                if (request.identifier == "dateView_rappel"){
-                    self.notif=true
+            DispatchQueue.main.async { 
+                for request in requests {
+                    if (request.identifier == "dateView_rappel"){
+                        self.notif=true
+                    }
                 }
+                self.notifIcon.isHidden = !self.notif
             }
-            self.notifIcon.isHidden = !self.notif
+            
         })
     }
     
