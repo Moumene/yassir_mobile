@@ -3,16 +3,19 @@ package com.example.stage_part1;
 
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.stage_part1.databinding.BottomSheetLayoutBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -88,10 +93,15 @@ public class resaDetails extends AppCompatActivity {
     {
 
         if (!isAlarmConfigured) {//Bottom sheet ajouter alarme
+
+            BottomSheetLayoutBinding binding = DataBindingUtil
+                   .inflate(LayoutInflater.from(this),R.layout.bottom_sheet_layout,null,false);
             BottomSheetDialog bottomSheet = new BottomSheetDialog();
+
             bottomSheet.show(getSupportFragmentManager(),"BottomSheet");
 
         }
+
         else {//Popup supprimer notif
 
             LayoutInflater layoutInflater = LayoutInflater.from(this);

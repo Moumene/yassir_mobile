@@ -10,6 +10,8 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.BindingAdapter;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -19,6 +21,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.example.stage_part1.databinding.BottomSheetLayoutBinding;
 
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
@@ -41,35 +46,42 @@ import static android.support.v4.content.ContextCompat.getSystemService;
 public class BottomSheetDialog extends BottomSheetDialogFragment {
      private EditText dateedit;
      private EditText timeedit;
-
+     private BottomSheetLayoutBinding binding ;
     private int year, month, day;
     private int hour, minute;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.bottom_sheet_layout,container,false);
-        return v;
+
+      binding = DataBindingUtil.inflate(inflater,R.layout.bottom_sheet_layout,container,false);
+      binding.setBSD(this);
+      binding.setDate("    ");
+      binding.setTime("    ");
+      return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
          dateedit= (EditText) getView().findViewById(R.id.Dateedit);
-        dateedit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                showDatePicker();
-            }
-        });
+
+
+//        dateedit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                showDatePicker();
+//            }
+//        });
         timeedit= (EditText) getView().findViewById(R.id.Timeedit) ;
-        timeedit.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                showTimePicker();
-            }
-        });
+//        timeedit.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                showTimePicker();
+//            }
+//
+//        });
 
         Button add_btn = (Button) getView().findViewById(R.id.add_alarm_btn) ;
         add_btn.setOnClickListener(new View.OnClickListener(){
@@ -102,6 +114,15 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
             }
         });
+
+    }
+
+    public void onClickDate(View v){
+        showDatePicker();
+
+    }
+    public void onClickTime(View v){
+        showTimePicker();
 
     }
 
@@ -182,9 +203,10 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
     TimePickerDialog.OnTimeSetListener ontime = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minutee) {
-            timeedit.setText(String.valueOf(hourOfDay)+":"+String.valueOf(minutee));
+//            timeedit.setText(String.valueOf(hourOfDay)+":"+String.valueOf(minutee));
             hour = hourOfDay;
             minute = minutee;
+            binding.setTime(hourOfDay+":"+minutee);
         }
     };
     private void showDatePicker() {
@@ -211,8 +233,12 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         public void onDateSet(DatePicker view, int yearr, int monthOfYear,
                               int dayOfMonth) {
 
-           dateedit.setText(String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear+1)
-                    + "/" + String.valueOf(yearr));
+          // dateedit.setText(String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear+1)
+          //          + "/" + String.valueOf(yearr));
+
+           binding.setDate(String.valueOf(dayOfMonth)+"/"+String.valueOf(monthOfYear)+"/"+String.valueOf(yearr));
+        //   binding.setMonth(String.valueOf(monthOfYear));
+        //   binding.setYear(String.valueOf(yearr));
 
            year = yearr;
            month = monthOfYear;
