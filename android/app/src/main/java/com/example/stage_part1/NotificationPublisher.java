@@ -27,13 +27,14 @@ public class NotificationPublisher extends BroadcastReceiver {
         Intent notificationIntent = new Intent(context, resaDetails.class);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(resaDetails.class);
-        stackBuilder.addNextIntent(notificationIntent);
+        stackBuilder.addNextIntentWithParentStack(notificationIntent);
+       // stackBuilder.addNextIntent(notificationIntent);
 
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Notification.Builder builder = new Notification.Builder(context);
 
+        Notification.Builder builder = new Notification.Builder(context);
+        builder.setContentIntent(pendingIntent);
         Notification notification = builder
                 .setSmallIcon(R.drawable.ic_star_black_24dp)
                 .setContentTitle("Rappel de Réservation")
