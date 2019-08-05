@@ -27,7 +27,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.stage_part1.databinding.ActionBarBinding;
 import com.example.stage_part1.databinding.ActivityResaDetailsBinding;
+import com.example.stage_part1.databinding.AlertPromtBinding;
 import com.example.stage_part1.model.Passager;
 import com.example.stage_part1.model.Trip;
 
@@ -67,10 +69,12 @@ public class resaDetails extends AppCompatActivity {
 
         mBinding.setTrip(new Trip(moumene,dateheureTrip,"Said Hamdine","Chemin de Yassir, Bir Mourad Rais","Kouba","Kouba",2000,"X321EQVC1"));
 
+
         //toolbar settings
-        Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
-        toolbar.setTitle("Détails de la Réservation");
-        setSupportActionBar(toolbar);
+
+       // aBinding= DataBindingUtil.setContentView(this,R.layout.action_bar);
+        mBinding.actionBar.actionbarr.setTitle("Détails de la Réservation");
+        setSupportActionBar( mBinding.actionBar.actionbarr);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -108,31 +112,29 @@ public class resaDetails extends AppCompatActivity {
         System.out.println("\n"+isAlarmConfigured+"\n");
     }
 
-    public void Onclick_alarm(View v)
-    {
+    public void Onclick_alarm(View v) {
 
         if (!isAlarmConfigured) {//Bottom sheet ajouter alarme
 
             BottomSheetLayoutBinding binding = DataBindingUtil
-                   .inflate(LayoutInflater.from(this),R.layout.bottom_sheet_layout,null,false);
+                    .inflate(LayoutInflater.from(this), R.layout.bottom_sheet_layout, null, false);
             BottomSheetDialog bottomSheet = new BottomSheetDialog();
 
-            bottomSheet.show(getSupportFragmentManager(),"BottomSheet");
+            bottomSheet.show(getSupportFragmentManager(), "BottomSheet");
 
-        }
+        } else {//Popup supprimer notif
 
-        else {//Popup supprimer notif
-
-            LayoutInflater layoutInflater = LayoutInflater.from(this);
-            View promptView = layoutInflater.inflate(R.layout.alert_promt, null);
+            AlertPromtBinding alertPromtBinding = DataBindingUtil
+                    .inflate(LayoutInflater.from(this),R.layout.alert_promt,null,false);
+//            LayoutInflater layoutInflater = LayoutInflater.from(this);
+//            View promptView = layoutInflater.inflate(R.layout.alert_promt, null);
 
             final AlertDialog.Builder alertDBuilder = new AlertDialog.Builder(this);
             final AlertDialog alertD = alertDBuilder.create();
 
-            Button btn_supp_alarm = (Button) promptView.findViewById(R.id.btn_supp_alarm);
-            Button btn_cancel_supp_alarm = (Button) promptView.findViewById(R.id.btn_cancel_supp_alarm);
+           //Button btn_cancel_supp_alarm = (Button) promptView.findViewById(R.id.btn_cancel_supp_alarm);
 
-            btn_supp_alarm.setOnClickListener(new View.OnClickListener() {
+            alertPromtBinding.btnSuppAlarm.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     CancelAlarm();
                     ImageButton imgbtn = findViewById(R.id.bell_btn);
@@ -144,13 +146,13 @@ public class resaDetails extends AppCompatActivity {
                 }
             });
 
-            btn_cancel_supp_alarm.setOnClickListener(new View.OnClickListener() {
+           alertPromtBinding.btnCancelSuppAlarm.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     alertD.cancel();
                 }
             });
 
-            alertD.setView(promptView);
+            alertD.setView(alertPromtBinding.getRoot());
 
             alertD.show();
 

@@ -66,6 +66,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
                 resaDetails.isAlarmConfigured = true;
                 resaDetails.SaveAlarmConfig();
                 dismiss();
+
             }
             else {
                 Toast toast = Toast.makeText(getActivity(),
@@ -130,7 +131,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         // SystemClock.elapsedRealtime() +10;
         AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
 
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,calender.getTimeInMillis(), pendingIntent);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,calender.getTimeInMillis(), pendingIntent);
 
     }
 
