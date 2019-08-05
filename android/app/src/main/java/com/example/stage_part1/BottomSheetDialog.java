@@ -64,7 +64,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-         dateedit= (EditText) getView().findViewById(R.id.Dateedit);
+       //  dateedit= (EditText) getView().findViewById(R.id.Dateedit);
 
 
 //        dateedit.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +74,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 //                showDatePicker();
 //            }
 //        });
-        timeedit= (EditText) getView().findViewById(R.id.Timeedit) ;
+      //  timeedit= (EditText) getView().findViewById(R.id.Timeedit) ;
 //        timeedit.setOnClickListener(new View.OnClickListener(){
 //            @Override
 //            public void onClick(View v) {
@@ -87,7 +87,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         add_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if ((timeedit.getText().toString()!="") && (dateedit.getText().toString()!="")){
+                if ((binding.Timeedit.getText().toString()!="") && (binding.Dateedit.getText().toString()!="")){
 
                     Calendar c = Calendar.getInstance();
                     c.set(year,month,day,hour,minute);
@@ -126,22 +126,10 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
     }
 
-    private Calendar getSetTime(){
 
-        String timeString = timeedit.getText().toString();
-        String[] separatedTime = timeString.split(":");
-        hour = Integer.parseInt(separatedTime[0]);
-        minute = Integer.parseInt(separatedTime[1]);
-
-
-        return  null;
-    }
 
 
     private void addNotif(int year,int month, int day,int hour,int minute) {
-        Date date = new Date();
-
-        getSetTime();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),"5")
                 .setSmallIcon(R.drawable.ic_star_black_24dp)
