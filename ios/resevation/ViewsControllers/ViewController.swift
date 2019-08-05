@@ -29,13 +29,14 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
     @IBOutlet weak var notifButton: UIButton!
     var dateNotif : Date!
     var notif: Bool!
-    var request:UNNotificationRequest!
     //let appDelegate = UIApplication.shared.delegate as? AppDelegate
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         UNUserNotificationCenter.current().delegate = self
+        let nav = self.navigationController?.navigationBar
+        nav?.barStyle=UIBarStyle.black
 
         self.dateLabel.cornerRadius(usingCorners: [.topLeft,.bottomLeft], cornerRadii:CGSize(width : 20,height : 20))
         
@@ -67,8 +68,6 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateNotif), name: UIApplication.willEnterForegroundNotification, object: nil)
         
-        
-        
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) {
             (granted, error) in
             if granted {
@@ -77,10 +76,6 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
                 print("No")
             }
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        print("cnvngvh")
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -137,21 +132,21 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
         let latitude:CLLocationDegrees = 36.811336
         let longitude:CLLocationDegrees = 3.236343
         if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-            UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic")!, options: [:], completionHandler: nil)
-            } else {
-            //print("Can't use comgooglemaps://")
-                let latitude:CLLocationDegrees = 36.811336
-                let longitude:CLLocationDegrees = 3.236343
-                let regionDistance:CLLocationDistance = 1000
-                let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
-                let regionSpan = MKCoordinateRegion.init(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
-                let options = [MKLaunchOptionsCameraKey : NSValue(mkCoordinate : regionSpan.center), MKLaunchOptionsMapSpanKey : NSValue(mkCoordinateSpan: regionSpan.span)]
-            
-                let placemark = MKPlacemark(coordinate:coordinates)
-                let mapItem = MKMapItem(placemark: placemark)
-                mapItem.name = "My House"
-                mapItem.openInMaps(launchOptions: options )
-            }
+        UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic")!, options: [:], completionHandler: nil)
+        } else {
+        //print("Can't use comgooglemaps://")
+            let latitude:CLLocationDegrees = 36.811336
+            let longitude:CLLocationDegrees = 3.236343
+            let regionDistance:CLLocationDistance = 1000
+            let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+            let regionSpan = MKCoordinateRegion.init(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+            let options = [MKLaunchOptionsCameraKey : NSValue(mkCoordinate : regionSpan.center), MKLaunchOptionsMapSpanKey : NSValue(mkCoordinateSpan: regionSpan.span)]
+        
+            let placemark = MKPlacemark(coordinate:coordinates)
+            let mapItem = MKMapItem(placemark: placemark)
+            mapItem.name = "My House"
+            mapItem.openInMaps(launchOptions: options )
+        }
     }
     
     @IBAction func locateArrivalPoint(_ sender: UIButton) {
@@ -159,7 +154,7 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
     
     
     
-    @IBAction func ajouterNotif(_ sender: Any) {
+    @IBAction func notifPressButton(_ sender: Any) {
         if (notif==false)
         {
             DatePickerDialog(locale: Locale(identifier: "fr_FR")).show("Ajouter une alarme", doneButtonTitle: "AJOUTER", cancelButtonTitle: "CANCEL", datePickerMode: .dateAndTime)
@@ -176,50 +171,22 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
                     if (date! < Date())
                     {
                         let alert = UIAlertController(title: "Date erronnée", message: "Vous avez introduit une date passée", preferredStyle: .alert)
-
                         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler:nil))
-
                         self.present(alert, animated: true)
                     }else {
                         self.dateNotif = date
                         self.notif = true
                         self.notifIcon.isHidden = false
-                        let dateReservation : String!
-                        let rider : String!
-                        dateReservation = "19/08/2019 15:15"
-                        rider = "alaa"
-                        //let userActions = "User Actions"
-                        let content = UNMutableNotificationContent()
-                        content.title = "Resrvation client"
-                        content.subtitle = rider
-                        content.body = dateReservation
-                        // 2
-                        //let imageName = "student"
-                        //guard let imageURL = Bundle.main.url(forResource: imageName, withExtension: "png") else { return }
-                        //let attachment = try! UNNotificationAttachment(identifier: imageName, url: imageURL, options: .none)
-                        //content.attachments = [attachment]
-                        //let date = Date(timeIntervalSinceNow: 30)
-                        
-                        let triggerDate = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second,], from: self.dateNotif)
-                        print(triggerDate)
-                        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
-                        //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+                        let dateReservation = "19/08/2019 15:15"
+                        let rider = "alaa"
                         let identifier = "dateView_rappel"
-                        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-                        // 4
-                        self.request=request
-                        UNUserNotificationCenter.current().add(request)
-                        { (error) in if let error = error {
-                            print("Error \(error.localizedDescription)")
-                            self.request=nil
-                            }
-                        }
+                        //let userActions = "User Actions"
+                        self.ajouterNotif(dateNotif: self.dateNotif, dateReservation: dateReservation, rider: rider, identifier: identifier)
                     }
                 }
             }
         }else{
             let alert = UIAlertController(title: "Suprimer l'alarme ?", message: "Êtes-vous sûr de vouloir supprimer définitivement l’alarme ?", preferredStyle: .alert)
-        
             alert.addAction(UIAlertAction(title: "Supprimer", style: .destructive,handler : { (action) -> Void in
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["dateView_rappel"])
                 self.dateNotif = nil
@@ -232,7 +199,33 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
             self.present(alert, animated: true)
         }
     }
+    
+    func ajouterNotif(dateNotif:Date,dateReservation:String,rider:String,identifier:String){
+        let content = UNMutableNotificationContent()
+        content.title = "Resrvation client"
+        content.subtitle = rider
+        content.body = dateReservation
+        // 2
+        //let imageName = "student"
+        //guard let imageURL = Bundle.main.url(forResource: imageName, withExtension: "png") else { return }
+        //let attachment = try! UNNotificationAttachment(identifier: imageName, url: imageURL, options: .none)
+        //content.attachments = [attachment]
+        //let date = Date(timeIntervalSinceNow: 30)
+        let triggerDate = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second,], from: dateNotif)
+        print(triggerDate)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
+        //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        // 4
+        UNUserNotificationCenter.current().add(request)
+        { (error) in if let error = error {
+            print("Error \(error.localizedDescription)")
+            }
+        }
+    }
+
 }
+
 extension UIView {
     func cornerRadius(usingCorners corners : UIRectCorner, cornerRadii: CGSize) {
         let path = UIBezierPath(roundedRect:self.bounds,
