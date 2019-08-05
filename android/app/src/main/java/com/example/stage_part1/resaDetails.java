@@ -41,7 +41,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class resaDetails extends AppCompatActivity {
-
+//update
     public static Context contextApp;
 
     public ImageButton alarmBtn;
