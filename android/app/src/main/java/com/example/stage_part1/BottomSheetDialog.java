@@ -110,7 +110,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         TimePickerFragment time = new TimePickerFragment();
         Calendar calender = Calendar.getInstance();
         Bundle args = new Bundle();
-        args.putInt("hour", calender.get(Calendar.HOUR));
+        args.putInt("hour", calender.get(Calendar.HOUR_OF_DAY));
         args.putInt("minute", calender.get(Calendar.MINUTE));
         time.setArguments(args);
         /**
