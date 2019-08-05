@@ -1,31 +1,25 @@
 package com.example.stage_part1;
 
-import android.annotation.SuppressLint;
+
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.ContentResolver;
-import android.content.ContentValues;
+
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.BindingAdapter;
+
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.provider.CalendarContract.*;
+
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -35,13 +29,8 @@ import android.widget.Toast;
 
 import com.example.stage_part1.databinding.BottomSheetLayoutBinding;
 
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
-import static android.content.Context.ALARM_SERVICE;
-import static android.support.v4.content.ContextCompat.getSystemService;
 
 public class BottomSheetDialog extends BottomSheetDialogFragment {
      private EditText dateedit;
