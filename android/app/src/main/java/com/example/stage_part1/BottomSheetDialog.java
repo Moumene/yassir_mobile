@@ -66,7 +66,6 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
                 resaDetails.isAlarmConfigured = true;
                 resaDetails.SaveAlarmConfig();
                 dismiss();
-
             }
             else {
                 Toast toast = Toast.makeText(getActivity(),
@@ -93,45 +92,16 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
     private void addNotif(int year,int month, int day,int hour,int minute) {
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),"5")
-                .setSmallIcon(R.drawable.ic_star_black_24dp)
-                .setContentTitle("Rappel de Réservation")
-                .setContentText("Vous avez un trajet entre Said Hamdin -kouba")
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Vous avez un trajet entre Said Hamdin -kouba avec monsieur Moumen Moumen"))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true);
-        //Vibration
-        builder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
-        Intent intent = new Intent(getActivity(),resaDetails.class);
-        PendingIntent activity = PendingIntent.getActivity(getActivity(),001,intent,PendingIntent.FLAG_CANCEL_CURRENT);
-        builder.setContentIntent(activity);
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
 
-
-        Notification notification = builder.build();
-
-        Intent notificationIntent = new Intent(getActivity(), NotificationPublisher.class);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 001);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 001, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        Calendar Current = Calendar.getInstance();
+        Intent notificationIntent = new Intent(getActivity(),NotificationPublisher.class);
+        PendingIntent broadcast = PendingIntent.getBroadcast(getActivity(), 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Calendar calender = Calendar.getInstance();
 
         calender.set(year,month,day,hour,minute);
 
-        //DEBUGGING
-        Date i  = calender.getTime();
-        Date j  = Current.getTime();
-
-
-        long futureInMillis = calender.getTimeInMillis()-Current.getTimeInMillis();
-
-        // SystemClock.elapsedRealtime() +10;
-        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP,calender.getTimeInMillis(), pendingIntent);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), broadcast);
 
     }
 
