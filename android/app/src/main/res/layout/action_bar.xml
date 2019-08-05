@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:theme="@style/CustomToolbarStyle"
-    app:titleTextColor="#FFFFFF"
-    app:titleTextAppearance="@style/Title"
-    >
-    <ImageButton
-        android:id="@+id/bell_btn"
-        android:layout_width="wrap_content"
+<layout>
+    <data>
+        <import type="com.example.stage_part1.resaDetails" />
+    </data>
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/actionbarr"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/baseline_notifications_white_24dp"
-        android:background="#00FFFFFF"
-        android:onClick="Onclick_alarm"
-        android:layout_gravity="end"
-        android:layout_marginEnd="10dp"
-        />
-</android.support.v7.widget.Toolbar>
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:theme="@style/CustomToolbarStyle"
+        app:titleTextColor="#FFFFFF"
+        app:titleTextAppearance="@style/Title"
+        >
+
+
+        <ImageButton
+            android:id="@+id/bell_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@{resaDetails.isAlarmConfigured? @drawable/alarm_configured_fixed: @drawable/baseline_notifications_white_24dp}"
+            android:background="#00FFFFFF"
+            android:onClick="Onclick_alarm"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+
+            />
+
+
+    </android.support.v7.widget.Toolbar>
+</layout>
