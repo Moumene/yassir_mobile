@@ -61,61 +61,34 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
       return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-       //  dateedit= (EditText) getView().findViewById(R.id.Dateedit);
+    public void onClickAddBtn(View v) {
+        if ((binding.Timeedit.getText().toString()!="") && (binding.Dateedit.getText().toString()!="")){
+
+            Calendar c = Calendar.getInstance();
+            c.set(year,month,day,hour,minute);
+
+            if (!c.before(Calendar.getInstance())){
+                addNotif(year,month,day,hour,minute);
 
 
-//        dateedit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // TODO Auto-generated method stub
-//                showDatePicker();
-//            }
-//        });
-      //  timeedit= (EditText) getView().findViewById(R.id.Timeedit) ;
-//        timeedit.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                showTimePicker();
-//            }
-//
-//        });
-
-        Button add_btn = (Button) getView().findViewById(R.id.add_alarm_btn) ;
-        add_btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if ((binding.Timeedit.getText().toString()!="") && (binding.Dateedit.getText().toString()!="")){
-
-                    Calendar c = Calendar.getInstance();
-                    c.set(year,month,day,hour,minute);
-
-                    if (!c.before(Calendar.getInstance())){
-                        addNotif(year,month,day,hour,minute);
-
-
-                        ImageButton imgbtn = ((resaDetails)getActivity()).alarmBtn;
-                        imgbtn.setImageResource(R.drawable.alarm_configured_fixed);
-                        imgbtn.setScaleType(ImageView.ScaleType.CENTER);
-                        resaDetails.isAlarmConfigured = true;
-                        resaDetails.SaveAlarmConfig();
-                        dismiss();
-                    }
-                    else {
-                        Toast toast = Toast.makeText(getActivity(),
-                                "Veuillez entrer une date valide",
-                                Toast.LENGTH_SHORT);
-
-                        toast.show();
-                    }
-                }
-
+                ImageButton imgbtn = ((resaDetails)getActivity()).alarmBtn;
+                imgbtn.setImageResource(R.drawable.alarm_configured_fixed);
+                imgbtn.setScaleType(ImageView.ScaleType.CENTER);
+                resaDetails.isAlarmConfigured = true;
+                resaDetails.SaveAlarmConfig();
+                dismiss();
             }
-        });
+            else {
+                Toast toast = Toast.makeText(getActivity(),
+                        "Veuillez entrer une date valide",
+                        Toast.LENGTH_SHORT);
+
+                toast.show();
+            }
+        }
 
     }
+
 
     public void onClickDate(View v){
         showDatePicker();
@@ -125,7 +98,6 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         showTimePicker();
 
     }
-
 
 
 

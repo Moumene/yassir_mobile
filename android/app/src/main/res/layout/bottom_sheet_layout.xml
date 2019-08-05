@@ -113,7 +113,7 @@
             android:text="Ajouter"
             android:textAlignment="center"
             android:textColor="#fff"
-            android:onClick="onClick_Ajouter_Alarm"/>
+            android:onClick="@{BSD::onClickAddBtn}"/>
     </LinearLayout>
 
 </layout>
