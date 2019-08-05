@@ -54,14 +54,14 @@ public class resaDetails extends AppCompatActivity {
         //Binding stuff
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_resa_details);
 
-        Passager moumene = new Passager("Moumen","Moumen",4.5f,R.mipmap.pic,0551573525);
+        Passager moumene = new Passager("Moumen","Moumen",4.5f,R.mipmap.pic,"0551573525");
         mBinding.setPassager(moumene);
 
 
         Calendar dateheureTrip = Calendar.getInstance();
         dateheureTrip.set(2018,11,12,19,30);
 
-        mBinding.setTrip(new Trip(moumene,dateheureTrip,"Said Hamdine","Chemin de Yassir, Bir Mourad Rais","Kouba","Chemin de Yassir, Bir Mourad Rais",2000,"X321EQVC1"));
+        mBinding.setTrip(new Trip(moumene,dateheureTrip,"Said Hamdine","Chemin de Yassir, Bir Mourad Rais","Kouba","Kouba",2000,"X321EQVC1"));
 
         //toolbar settings
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
@@ -74,7 +74,7 @@ public class resaDetails extends AppCompatActivity {
         alarmBtn = findViewById(R.id.bell_btn);
             isAlarmConfigured = IsAalrmSet();
             SaveAlarmConfig();
-       // LoadAlarmConfig();
+
         if (isAlarmConfigured)
             alarmBtn.setImageResource(R.drawable.alarm_configured_fixed);
 
@@ -150,8 +150,8 @@ public class resaDetails extends AppCompatActivity {
     }
     public void location_btn_1_click(View v)
     {
-        String source = "Yassir";
-        String destination = "Said Hamdine";
+        String source ="My+Location";
+        String destination = mBinding.getTrip().getSourceAdr();
         Uri gmmIntentUri = Uri.parse("https://www.google.com/maps/dir/?api=1&origin="+ source + "&destination="+destination+"&travelmode=car");
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
@@ -160,17 +160,18 @@ public class resaDetails extends AppCompatActivity {
 
     public void location_btn_2_click(View v)
     {
-        String source = "Yassir";
-        String destination = "Kouba";
+        String source = "My+Location";
+        String destination = mBinding.getTrip().getDestinationAdr();
         Uri gmmIntentUri = Uri.parse("https://www.google.com/maps/dir/?api=1&origin="+ source + "&destination="+destination+"&travelmode=car");
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
     }
+
     public void onClickCall(View v)
     {
         Intent callIntent = new Intent(Intent.ACTION_DIAL);
-        callIntent.setData(Uri.parse("tel:0551573525"));
+        callIntent.setData(Uri.parse("tel:"+mBinding.getPassager().getNumTel()));
         startActivity(callIntent);
     }
 
@@ -182,6 +183,7 @@ public class resaDetails extends AppCompatActivity {
                 PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
     }
+
     public boolean IsAalrmSet() {
 
         Intent notificationIntent = new Intent(getApplicationContext(), NotificationPublisher.class);
