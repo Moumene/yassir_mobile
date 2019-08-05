@@ -1,41 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/bottom_sheet"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#ffffff"
-    android:orientation="vertical"
-    android:padding="20dp">
+<layout>
+    <data>
+        <import type="com.example.stage_part1.BottomSheetDialog" />
 
-    <TextView
-        android:id="@+id/textView"
+        <variable name="Date" type="String"/>
+        <variable
+            name="Time"  type="String" />
+        <variable
+            name="BSD" type="com.example.stage_part1.BottomSheetDialog" />
+
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ajouter une alarme"
-        android:textAlignment="center"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:drawableRight="@drawable/ic_near_me_black_24dp"/>
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:text="Ajouter une alarme dans votre calendrier\n afin de ne rater aucune réservation."
-        android:drawableRight="@drawable/ic_near_me_black_24dp"/>
-
-
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:background="#ffffff"
         android:orientation="vertical"
-        >
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ajouter une alarme"
+            android:textAlignment="center"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:drawableRight="@drawable/ic_near_me_black_24dp"/>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="Ajouter une alarme dans votre calendrier\n afin de ne rater aucune réservation."
+            android:drawableRight="@drawable/ic_near_me_black_24dp"/>
+
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -57,8 +68,9 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:inputType="date"
-                    android:onClick="onClick_date"/>
+                    android:text="@{Date}"
+                    android:onClick="@{BSD::onClickDate}"
+                  />
 
             </RelativeLayout>
 
@@ -83,22 +95,25 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:inputType="time"
-                    android:onClick="onClick_Time"/>
+                   android:text="@{Time}"
+                    android:onClick="@{BSD::onClickTime}"
+                    />
 
 
             </RelativeLayout>
 
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/add_alarm_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_add_btn"
+            android:text="Ajouter"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:onClick="@{BSD::onClickAddBtn}"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/add_alarm_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/border_add_btn"
-        android:text="Ajouter"
-        android:textAlignment="center"
-        android:textColor="#fff"
-        android:onClick="onClick_Ajouter_Alarm"/>
-</LinearLayout>
+</layout>

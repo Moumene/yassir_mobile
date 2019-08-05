@@ -1,429 +1,446 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".resaDetails"
-    android:background="#E6E6E6">
+<layout>
 
-   <include
-       layout="@layout/action_bar"
-       android:id="@+id/action_bar"/>
+    <data>
+        <import type="com.example.stage_part1.util.StringUtil"/>
+        <import type="android.view.View" />
 
+        <variable
+            name="passager"
+            type="com.example.stage_part1.model.Passager" />
+        <variable
+            name="trip"
+            type="com.example.stage_part1.model.Trip"/>
 
-    <ScrollView
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".resaDetails"
+        android:background="#E6E6E6">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <include
+            layout="@layout/action_bar"
+            android:id="@+id/action_bar"/>
+
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <!--Date & Heure-->
+            android:layout_height="match_parent">
 
             <LinearLayout
-
-
-                android:clipToPadding="false"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:elevation="10dp">
-
-                <Button
-                    android:id="@+id/date_btn"
-                    android:elevation="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:text="12 Novembre 2018"
-                    android:textSize="9dp"
-                    android:width="100dp"
-                    android:height="20dp"
-                    android:background="@drawable/round_shape_btn_left"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    />
-
-
-                <Button
-                    android:id="@+id/time_btn"
-                    android:layout_gravity="center"
-                    android:elevation="10dp"
-                    android:text="19:30"
-                    android:textSize="9dp"
-                    android:layout_width="50dp"
-                    android:layout_height="25dp"
-                    android:width="25dp"
-                    android:background="@drawable/round_shape_btn_right"
-                    android:gravity="center" />
-            </LinearLayout>
-
-
-            <!--Info Passager-->
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/card_view"
-                android:background="#FFFFFF"
-                android:layout_gravity="center"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="120dp">
+                android:layout_height="wrap_content">
+
+                <!--Date & Heure-->
 
                 <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
+
+
+                    android:clipToPadding="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:padding="5dp"
+                    android:elevation="10dp">
+
+                    <Button
+                        android:id="@+id/date_btn"
+                        android:elevation="10dp"
+                        android:layout_width="150dp"
+                        android:layout_height="30dp"
+                        android:text="@{StringUtil.getDateWords(trip.dateheureTrip)}"
+                        android:textSize="13dp"
+                        android:textAllCaps="false"
+                        android:background="@drawable/round_shape_btn_left"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        />
+                    <!--android:width="100dp"-->
+                    <!--android:height="20dp"-->
+
+
+                    <Button
+                        android:layout_marginStart="1dp"
+                        android:id="@+id/time_btn"
+                        android:layout_gravity="center"
+                        android:elevation="10dp"
+                        android:text="@{StringUtil.getTimeString(trip.dateheureTrip)}"
+                        android:textSize="13dp"
+                        android:layout_width="70dp"
+                        android:layout_height="30dp"
+
+                        android:background="@drawable/round_shape_btn_right"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <!--Info Passager-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view"
+                    android:background="#FFFFFF"
+                    android:layout_gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="120dp">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_marginTop="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:text="VOTRE PASSAGER" />
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
-                            android:layout_alignParentStart="true"
-                            android:layout_marginTop="5dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                            <com.mikhaellopez.circularimageview.CircularImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@mipmap/pic"
-                                app:civ_border_width="0dp"
-                                app:civ_shadow="true"
-                                app:civ_shadow_radius="5"
-                                app:civ_shadow_color="#4B4A4A"/>
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:text="VOTRE PASSAGER" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
                             <LinearLayout
+                                android:layout_alignParentStart="true"
                                 android:layout_marginTop="5dp"
-                                android:layout_marginLeft="5dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <TextView
-                                    android:textColor="#000000"
-                                    android:textSize="15dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Moumen Moumen"/>
-                                <LinearLayout
-                                    android:layout_marginTop="2dp"
-                                    android:layout_marginLeft="2dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
-                                    <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
 
-                                        android:layout_width="17dp"
-                                        android:layout_height="17dp"
-                                        android:src="@drawable/ic_star_black_24dp"
-                                        />
+                                <com.mikhaellopez.circularimageview.CircularImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    app:imageUrl="@{passager.imageSrc}"
+                                    app:civ_border_width="0dp"
+                                    app:civ_shadow="true"
+                                    app:civ_shadow_radius="5"
+                                    app:civ_shadow_color="#4B4A4A"/>
+                                <LinearLayout
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
                                     <TextView
+                                        android:textColor="#000000"
+                                        android:textSize="15dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="4.5"/>
+                                        android:text="@{StringUtil.getSurnameName(trip)}"/>
+                                    <LinearLayout
+                                        android:layout_marginTop="2dp"
+                                        android:layout_marginLeft="2dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+                                        <ImageView
+
+                                            android:layout_width="17dp"
+                                            android:layout_height="17dp"
+                                            android:src="@drawable/ic_star_black_24dp"
+                                            />
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@{Float.toString(trip.passager.rating)}"/>
+
+                                    </LinearLayout>
 
                                 </LinearLayout>
 
                             </LinearLayout>
+                            <android.support.design.widget.FloatingActionButton
 
-                        </LinearLayout>
-                        <android.support.design.widget.FloatingActionButton
+                                android:layout_marginEnd="20dp" android:layout_marginTop="5dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_gravity="end"
+                                app:fabSize="mini"
+                                android:id="@+id/call_passenger_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:onClick="onClickCall"
+                                app:backgroundTint="#CFCFCF"
+                                app:rippleColor="#7E7E7E"
+                                app:srcCompat="@drawable/ic_local_phone_black_24dp" />
 
-                            android:layout_marginEnd="20dp" android:layout_marginTop="5dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_gravity="end"
-                            app:fabSize="mini"
-                            android:id="@+id/call_passenger_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:clickable="true"
-                            android:onClick="onClickCall"
-                            app:backgroundTint="#CFCFCF"
-                            app:rippleColor="#7E7E7E"
-                            app:srcCompat="@drawable/ic_local_phone_black_24dp" />
+                        </RelativeLayout>
 
-                    </RelativeLayout>
-
-                </LinearLayout>
+                    </LinearLayout>
 
 
 
-            </android.support.v7.widget.CardView>
+                </android.support.v7.widget.CardView>
 
 
-            <android.support.v7.widget.CardView
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <LinearLayout
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="20dp"
+                <android.support.v7.widget.CardView
+                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content">
 
 
-                    <TextView
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:text="TRAJET"/>
                     <LinearLayout
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_marginLeft="3dp"
+                        android:orientation="vertical">
 
-                        //Image view here
+
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="TRAJET"/>
                         <LinearLayout
                             android:layout_marginTop="10dp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
-                            <ImageView
-                                android:layout_width="17dp"
-                                android:layout_height="20dp"
+                            android:orientation="horizontal">
 
-                                android:src="@drawable/circle_border_orange"/>
+                            //Image view here
+                            <LinearLayout
+                                android:layout_marginTop="10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                                <ImageView
+                                    android:layout_width="17dp"
+                                    android:layout_height="20dp"
 
-                            <ImageView
-                                android:layout_marginTop="5dp"
-                                android:layout_width="17dp"
-                                android:layout_height="40dp"
-                                android:src="@drawable/arrowsmallborder" />z
+                                    android:src="@drawable/circle_border_orange"/>
 
-                            <ImageView
-                                android:layout_marginTop="5dp"
-                                android:layout_width="17dp"
-                                android:layout_height="20dp"
-                                android:src="@drawable/circle_border_black"/>
-
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_marginStart="10dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            // Said hamdine
-                            <RelativeLayout
-
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:orientation="horizontal">
-                                <LinearLayout
-                                    android:layout_marginEnd="100dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Said Hamdine"
-                                        android:textColor="#000000"
-                                        android:textSize="17dp"
-                                        android:textStyle="bold"/>
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Chemin de yassir,Bir Mourad raiss"
-                                        android:ellipsize="end"
-                                        android:maxLines="1"/>
-
-                                </LinearLayout>
-
-                                <android.support.design.widget.FloatingActionButton
-
-                                    android:id="@+id/location_btn_1"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_gravity="end"
+                                <ImageView
                                     android:layout_marginTop="5dp"
-                                    android:layout_marginEnd="20dp"
-                                    android:layout_weight="1"
-                                    android:clickable="true"
-                                    android:onClick="location_btn_1_click"
-                                    app:backgroundTint="#2F7CF6"
-                                    app:fabSize="mini"
-                                    app:rippleColor="#11456F"
-                                    app:srcCompat="@drawable/ic_near_me_black_24dp" />
+                                    android:layout_width="17dp"
+                                    android:layout_height="40dp"
+                                    android:src="@drawable/arrowsmallborder" />z
 
-                            </RelativeLayout>
+                                <ImageView
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="17dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/circle_border_black"/>
 
-                            <View
-                                android:layout_marginRight="40dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="1.5dp"
-                                android:background="#B4ABAB"
-                                />
-                            // Kouba
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:orientation="horizontal">
-                                <LinearLayout
-                                    android:layout_marginEnd="100dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-                                    <TextView
-                                        android:layout_width="match_parent"
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_marginStart="10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                // Said hamdine
+                                <RelativeLayout
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="60dp"
+                                    android:orientation="horizontal">
+                                    <LinearLayout
+                                        android:layout_marginEnd="100dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical">
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="@{trip.sourceName}"
+                                            android:textColor="#000000"
+                                            android:textSize="17dp"
+                                            android:textStyle="bold"/>
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="@{trip.sourceAdr}"
+                                            android:ellipsize="end"
+                                            android:maxLines="1"/>
+
+                                    </LinearLayout>
+
+                                    <android.support.design.widget.FloatingActionButton
+
+                                        android:id="@+id/location_btn_1"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Kouba"
-                                        android:textSize="17dp"
-                                        android:textColor="#000000"
-                                        android:textStyle="bold"/>
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_gravity="end"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="20dp"
+                                        android:layout_weight="1"
+                                        android:clickable="true"
+                                        android:onClick="location_btn_1_click"
+                                        app:backgroundTint="#2F7CF6"
+                                        app:fabSize="mini"
+                                        app:rippleColor="#11456F"
+                                        app:srcCompat="@drawable/ic_near_me_black_24dp" />
 
-                                    <TextView
-                                        android:layout_width="match_parent"
+                                </RelativeLayout>
+
+                                <View
+                                    android:layout_marginRight="40dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1.5dp"
+                                    android:background="#B4ABAB"
+                                    />
+                                // Kouba
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="60dp"
+                                    android:orientation="horizontal">
+                                    <LinearLayout
+                                        android:layout_marginEnd="100dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical">
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="@{trip.destinationName}"
+                                            android:textSize="17sp"
+                                            android:textColor="#000000"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="@{trip.destinationAdr}"
+                                            android:ellipsize="end"
+                                            android:maxLines="1"/>
+
+                                    </LinearLayout>
+                                    <android.support.design.widget.FloatingActionButton
+
+                                        android:layout_marginEnd="20dp" android:layout_marginTop="5dp"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_gravity="end"
+                                        app:fabSize="mini"
+                                        android:id="@+id/location_btn_2"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Chemin de yassir,Bir Mourad raiss"
-                                        android:ellipsize="end"
-                                        android:maxLines="1"/>
+                                        android:onClick="location_btn_2_click"
+                                        android:layout_weight="1"
+                                        android:clickable="true"
+                                        app:backgroundTint="#2F7CF6"
+                                        app:rippleColor="#11456F"
+                                        app:srcCompat="@drawable/ic_near_me_black_24dp" />
 
-                                </LinearLayout>
-                                <android.support.design.widget.FloatingActionButton
-
-                                    android:layout_marginEnd="20dp" android:layout_marginTop="5dp"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_gravity="end"
-                                    app:fabSize="mini"
-                                    android:id="@+id/location_btn_2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:onClick="location_btn_2_click"
-                                    android:layout_weight="1"
-                                    android:clickable="true"
-                                    app:backgroundTint="#2F7CF6"
-                                    app:rippleColor="#11456F"
-                                    app:srcCompat="@drawable/ic_near_me_black_24dp" />
-
-                            </RelativeLayout>
+                                </RelativeLayout>
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                </android.support.v7.widget.CardView>
 
 
-            <android.support.v7.widget.CardView
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                <android.support.v7.widget.CardView
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                //Somme a encaisser
-                <LinearLayout
+                    //Somme a encaisser
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:orientation="vertical">
+
+                        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="0dp"
+                            android:orientation="horizontal" >
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="9dp"
+                                android:text="SOMME A ENCAISSER"
+                                />
+
+                            <Button
+                                android:id="@+id/details_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="20dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="10dp"
+                                android:text="Détails"
+                                android:textSize="15dp"
+                                android:drawableRight="@drawable/ic_error_black_24dp"
+                                android:background="#FFFFFF"
+                                android:onClick="onClickDetails"
+                                />
+
+                        </RelativeLayout>
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="@{StringUtil.getMoneyFormat(trip.montant)}"
+                            android:textStyle="bold"
+                            android:textSize="35dp"
+                            android:textColor="#000000"/>
+                    </LinearLayout>
+
+
+
+
+                </android.support.v7.widget.CardView>
+
+                // ID COURSE
+
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:orientation="vertical">
+                    android:layout_marginTop="8dp">
 
-                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:layout_width="fill_parent"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="0dp"
-                        android:orientation="horizontal" >
+                        android:layout_marginLeft="3dp"
+                        android:orientation="vertical">
+
                         <TextView
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="9dp"
-                            android:text="SOMME A ENCAISSER"
+                            android:text="IDENTIFIANT DE LA COURSE"
                             />
 
-                        <Button
-                            android:id="@+id/details_btn"
+                        <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="15dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Détails"
-                            android:textSize="15dp"
-                            android:drawableRight="@drawable/ic_error_black_24dp"
-                            android:background="#FFFFFF"
-                            />
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="@{trip.id_course}"
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            android:textColor="#000000"/>
+                    </LinearLayout>
 
-                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="2 000 Da"
-                        android:textStyle="bold"
-                        android:textSize="35dp"
-                        android:textColor="#000000"/>
-                </LinearLayout>
+            </LinearLayout>
 
 
 
-
-            </android.support.v7.widget.CardView>
-
-            // ID COURSE
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:orientation="vertical">
-
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="9dp"
-                        android:text="IDENTIFIANT DE LA COURSE"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:text="X321EQVC1"
-                        android:textStyle="bold"
-                        android:textSize="20dp"
-                        android:textColor="#000000"/>
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-
-        </LinearLayout>
+        </ScrollView>
 
 
 
-    </ScrollView>
-
-
-
-</LinearLayout>
+    </LinearLayout>
+</layout>

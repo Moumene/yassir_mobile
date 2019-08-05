@@ -1,51 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="15dp"
-    android:textAlignment="textStart"
-
-    >
-
-    <TextView
-        android:layout_width="wrap_content"
+<layout>
+    <data>
+        <import type="com.example.stage_part1.resaDetails" />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Supprimer l'alarme ?"
-        android:textColor="#000000"
-        android:textSize="20dp"
-        android:padding="5dp"
-        />
-    <TextView
-        android:padding="5dp"
-        android:textSize="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Etes-vous sûr de vouloir supprimer\ndefinitevement cette alarme?"/>
+        android:padding="15dp"
+        android:textAlignment="textStart"
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end">
-        <Button
-            android:id="@+id/btn_supp_alarm"
+        >
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Supprimer"
-            android:textAllCaps="false"
-            android:textColor="#DD0000"
-            android:background="#00000000"
-            android:shadowColor="#00000000"/>
-        <Button
-            android:id="@+id/btn_cancel_supp_alarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="Garder"
+            android:text="Supprimer l'alarme ?"
             android:textColor="#000000"
-            android:background="#00000000"
-            android:shadowColor="#00000000"/>
+            android:textSize="20dp"
+            android:padding="5dp"
+            />
+        <TextView
+            android:padding="5dp"
+            android:textSize="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Etes-vous sûr de vouloir supprimer\ndefinitevement cette alarme?"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end">
+            <Button
+                android:id="@+id/btn_supp_alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Supprimer"
+                android:textAllCaps="false"
+                android:textColor="#DD0000"
+                android:background="#00000000"
+                android:shadowColor="#00000000"/>
+            <Button
+                android:id="@+id/btn_cancel_supp_alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="Garder"
+                android:textColor="#000000"
+                android:background="#00000000"
+                android:shadowColor="#00000000"/>
+        </LinearLayout>
+
+
+
     </LinearLayout>
-
-
-
-</LinearLayout>
+</layout>
