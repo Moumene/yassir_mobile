@@ -1,14 +1,20 @@
 package com.example.stage_part1.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class Passager {
 
     private String name;
     private String surname;
     private float rating;
     private int imageSrc;
-    private long numTel;
 
-    public Passager(String name, String surname, float rating, int imageSrc, long numTel) {
+
+
+    private String numTel;
+
+    public Passager(String name, String surname, float rating, int imageSrc, String numTel) {
         this.name = name;
         this.surname = surname;
         this.rating = rating;
@@ -47,11 +53,12 @@ public class Passager {
         this.imageSrc = imageSrc;
     }
 
-    public long getNumTel() {
+    public String getNumTel() {
         return numTel;
     }
 
-    public void setNumTel(long numTel) {
+    public void setNumTel(String numTel) {
         this.numTel = numTel;
     }
+
 }
