@@ -209,4 +209,11 @@ public class resaDetails extends AppCompatActivity {
         return alarmUp;
     }
 
+    public void onClickDetails(View v)
+    {
+
+
+    }
+
+
 }
