@@ -10,8 +10,12 @@ import UIKit
 import UserNotifications
 import CoreLocation
 import MapKit
+import Alamofire
+import SwiftyJSON
+import SVProgressHUD
 class ViewController: UIViewController,UNUserNotificationCenterDelegate {
 
+    let URL_API = "http://localhost:8080/data"
     @IBOutlet weak var navigtionView: UIView!
     @IBOutlet weak var dateView: UIView!
     @IBOutlet weak var dateLabel: UILabel!
@@ -29,6 +33,7 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
     @IBOutlet weak var notifButton: UIButton!
     var dateNotif : Date!
     var notif: Bool!
+    
     //let appDelegate = UIApplication.shared.delegate as? AppDelegate
 
 
@@ -66,6 +71,8 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
         
         updateNotif()
         
+        getRiderData(url: URL_API)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(updateNotif), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) {
@@ -74,6 +81,21 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
                 print("yes")
             } else {
                 print("No")
+            }
+        }
+    }
+    
+    func getRiderData(url : String){
+        Alamofire.request(url, method: .get).responseJSON{
+            response in
+            if response.result.isSuccess{
+                print("Success! got the rider data")
+                let dataJSON : JSON = JSON(response.result.value!)
+                print(dataJSON)
+                
+            }else{
+                print("WTTTFFFFFFFFFFF")
+                print("Error \(String(describing: response.result.error))")
             }
         }
     }
@@ -149,9 +171,9 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
         }
     }
     
+    
     @IBAction func locateArrivalPoint(_ sender: UIButton) {
     }
-    
     
     
     @IBAction func notifPressButton(_ sender: Any) {
