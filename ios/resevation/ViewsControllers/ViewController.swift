@@ -13,11 +13,12 @@ import MapKit
 import Alamofire
 import SwiftyJSON
 import SVProgressHUD
-class ViewController: UIViewController,UNUserNotificationCenterDelegate {
-    
+import CoreLocation
+
+class ViewController: UIViewController,UNUserNotificationCenterDelegate,CLLocationManagerDelegate {
+    let locationManager = CLLocationManager()
     
     let URL_API = "http://192.168.1.215:8080/data"
-    
 
     
     @IBOutlet weak var navigtionView: UIView!
@@ -54,12 +55,19 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
     var dateNotif : Date!
     var notif: Bool!
     var ride: Ride!
+    var currentLocation : CLLocation!
     
     //let appDelegate = UIApplication.shared.delegate as? AppDelegate
 
 
     override func viewDidLoad() {
+        
         getRiderData(url: URL_API)
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
         super.viewDidLoad()
         UNUserNotificationCenter.current().delegate = self
         let nav = self.navigationController?.navigationBar
@@ -91,10 +99,6 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
         self.idView.setShadow()
         
         
-        
-        
-       
-        
         NotificationCenter.default.addObserver(self, selector: #selector(updateNotif), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) {
@@ -105,6 +109,23 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
                 print("No")
             }
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations[locations.count - 1]
+        if location.horizontalAccuracy > 0 {
+            locationManager.stopUpdatingLocation()
+            //print("longitude = \(location.coordinate.longitude ),latitude = \(location.coordinate.latitude ), ")
+            //let longitude = String(location.coordinate.longitude)
+            self.currentLocation=location
+            print("longitude = \(self.currentLocation.coordinate.longitude ),latitude = \(self.currentLocation.coordinate.latitude ), ")
+
+        }
+
     }
     
     func getRiderData(url : String){
@@ -146,24 +167,46 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {
             response in
+            if let statusCode = response.response?.statusCode  {
+                print(statusCode)
+            }
+            
             if response.result.isSuccess{
-                let dataJSON : JSON = JSON(response.result.value!)
-                if dataJSON["validation"] == "NOTIFICATION VALIDE"{
+                if response.response?.statusCode == 202{
                     print ("notification accepté")
                     self.dateNotif = dateNotif
                     self.notif = true
                     self.notifIcon.isHidden = false
                     //let userActions = "User Actions"
-                    
+
                     let date = parseDateToString(date: dateReservation) + parseTimeToString(date: dateReservation)
                     self.ajouterNotif(dateNotif: self.dateNotif, dateReservation: date, rider: self.ride.passenger.fullName, identifier:self.ride.id)
-                    
-                }else{
+
+                } else if response.response?.statusCode == 400{
                     print("alerte indiquant l'entrée dune date non valide")
                     let alert = UIAlertController(title: "Date erronnée", message: "Vous avez introduit une date passée", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler:nil))
                     self.present(alert, animated: true)
+                } else {
+                    print("don't know what the fuck u just did !!")
                 }
+
+//                if dataJSON["validation"] == "NOTIFICATION VALIDE"{
+//                    print ("notification accepté")
+//                    self.dateNotif = dateNotif
+//                    self.notif = true
+//                    self.notifIcon.isHidden = false
+//                    //let userActions = "User Actions"
+//
+//                    let date = parseDateToString(date: dateReservation) + parseTimeToString(date: dateReservation)
+//                    self.ajouterNotif(dateNotif: self.dateNotif, dateReservation: date, rider: self.ride.passenger.fullName, identifier:self.ride.id)
+//
+//                }else{
+//                    print("alerte indiquant l'entrée dune date non valide")
+//                    let alert = UIAlertController(title: "Date erronnée", message: "Vous avez introduit une date passée", preferredStyle: .alert)
+//                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler:nil))
+//                    self.present(alert, animated: true)
+//                }
                 
             }else{
                 print("WTTTFFFFFFFFFFF")
@@ -224,8 +267,11 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
     @IBAction func locateDepartPoint(_ sender: UIButton) {
         let latitude:CLLocationDegrees = ride.source.latitude
         let longitude:CLLocationDegrees = ride.source.longitude
+        print("longitude = \(longitude ),latitude = \(latitude ), ")
+
         if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-        UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic")!, options: [:], completionHandler: nil)
+            UIApplication.shared.open(URL(string:String(format: "comgooglemaps://?saddr=%.6f,%.6f&daddr=\(latitude),\(longitude)&directionsmode=driving&views=traffic",self.currentLocation.coordinate.latitude,self.currentLocation.coordinate.longitude))!, options: [:], completionHandler: nil)
+            //&center=\(latitude),\(longitude)&zoom=14
         } else {
         //print("Can't use comgooglemaps://")
             let regionDistance:CLLocationDistance = 1000
