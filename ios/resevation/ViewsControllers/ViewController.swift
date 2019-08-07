@@ -14,16 +14,36 @@ import Alamofire
 import SwiftyJSON
 import SVProgressHUD
 class ViewController: UIViewController,UNUserNotificationCenterDelegate {
+    
+    
+    let URL_API = "http://192.168.1.215:8080/data"
+    
 
-    let URL_API = "http://localhost:8080/data"
+    
     @IBOutlet weak var navigtionView: UIView!
     @IBOutlet weak var dateView: UIView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var heureLabel: UILabel!
+
+    
+    @IBOutlet weak var PassengerPicture: UIImageView!
+    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var NameLabel: UILabel!
+    @IBOutlet weak var RatingLabel: UILabel!
+    
+    
+    @IBOutlet weak var TitleAddressSourceLabel: UILabel!
+    @IBOutlet weak var AddressSourceLabel: UILabel!
+    @IBOutlet weak var TitleAddressDestinationLabel: UILabel!
+    @IBOutlet weak var AddressDestinationLabel: UILabel!
+    
+    @IBOutlet weak var CostLabel: UILabel!
+    
+    @IBOutlet weak var IDLabel: UILabel!
     //@IBOutlet weak var heureView: UIView!
     @IBOutlet weak var notifIcon: UIImageView!
     
-    @IBOutlet weak var userImage: UIImageView!
+    
     @IBOutlet weak var callButton: UIButton!
     @IBOutlet weak var informationButton: UIButton!
     @IBOutlet weak var passagerView: UIView!
@@ -33,11 +53,13 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
     @IBOutlet weak var notifButton: UIButton!
     var dateNotif : Date!
     var notif: Bool!
+    var ride: Ride!
     
     //let appDelegate = UIApplication.shared.delegate as? AppDelegate
 
 
     override func viewDidLoad() {
+        getRiderData(url: URL_API)
         super.viewDidLoad()
         UNUserNotificationCenter.current().delegate = self
         let nav = self.navigationController?.navigationBar
@@ -69,9 +91,9 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
         self.idView.setShadow()
         
         
-        updateNotif()
         
-        getRiderData(url: URL_API)
+        
+       
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateNotif), name: UIApplication.willEnterForegroundNotification, object: nil)
         
@@ -90,8 +112,58 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
             response in
             if response.result.isSuccess{
                 print("Success! got the rider data")
+                self.ride = parseRide(jsonObj: JSON(response.result.value!))
+                
+                let date: Date = self.ride.dateTime
+                self.dateLabel.text = parseDateToString(date: date)
+                self.heureLabel.text = parseTimeToString(date: date)
+                
+                self.NameLabel.text = self.ride.passenger.fullName
+                self.RatingLabel.text = String(Float(self.ride.passenger.rating))
+                //self.PhoneNumber = ride.passenger.phoneNumber
+                
+                self.TitleAddressSourceLabel.text = self.ride.source.name
+                self.AddressSourceLabel.text = self.ride.source.address
+                //retrieve GPS coords
+                self.TitleAddressDestinationLabel.text = self.ride.destination.address
+                self.AddressDestinationLabel.text = self.ride.destination.address
+                //retrieve GPS coords
+                
+                self.CostLabel.text = ("\(self.ride.cost) Da")
+                self.IDLabel.text = self.ride.id
+                self.updateNotif()
+                
+            }else{
+                print("WTTTFFFFFFFFFFF")
+                print("Error \(String(describing: response.result.error))")
+            }
+        }
+        
+    }
+    
+    func validateNotif(url : String, dateNotif : Date, dateReservation : Date){
+        let parameters: [String: Any] = ["dateNotif" : dateNotif.timeIntervalSince1970, "dateRes" : dateReservation.timeIntervalSince1970]
+        
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {
+            response in
+            if response.result.isSuccess{
                 let dataJSON : JSON = JSON(response.result.value!)
-                print(dataJSON)
+                if dataJSON["validation"] == "NOTIFICATION VALIDE"{
+                    print ("notification accepté")
+                    self.dateNotif = dateNotif
+                    self.notif = true
+                    self.notifIcon.isHidden = false
+                    //let userActions = "User Actions"
+                    
+                    let date = parseDateToString(date: dateReservation) + parseTimeToString(date: dateReservation)
+                    self.ajouterNotif(dateNotif: self.dateNotif, dateReservation: date, rider: self.ride.passenger.fullName, identifier:self.ride.id)
+                    
+                }else{
+                    print("alerte indiquant l'entrée dune date non valide")
+                    let alert = UIAlertController(title: "Date erronnée", message: "Vous avez introduit une date passée", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler:nil))
+                    self.present(alert, animated: true)
+                }
                 
             }else{
                 print("WTTTFFFFFFFFFFF")
@@ -103,7 +175,7 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         //xlet content = notification.request.content
         //print("Test: \(notification.request.identifier)")
-        if (notification.request.identifier == "dateView_rappel"){
+        if (notification.request.identifier == self.ride.id){
             self.notifIcon.isHidden = true
             self.notif=false
         }
@@ -126,7 +198,7 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
         center.getPendingNotificationRequests(completionHandler: { requests in
             DispatchQueue.main.async { 
                 for request in requests {
-                    if (request.identifier == "dateView_rappel"){
+                    if (request.identifier == self.ride.id){
                         self.notif=true
                     }
                 }
@@ -143,22 +215,19 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
     
     //fonction d'appel
     @IBAction func tellAccess(_ sender: UIButton) {
-        var number : String
-        number = "0559882554"
-        guard let url = URL(string: "tel://" + number )else {return}
+
+        guard let url = URL(string: "tel://" + self.ride.passenger.phoneNumber )else {return}
         UIApplication.shared.open(url)
     }
     
     //ouvre l'app map avec les coordonnées donneés
     @IBAction func locateDepartPoint(_ sender: UIButton) {
-        let latitude:CLLocationDegrees = 36.811336
-        let longitude:CLLocationDegrees = 3.236343
+        let latitude:CLLocationDegrees = ride.source.latitude
+        let longitude:CLLocationDegrees = ride.source.longitude
         if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
         UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic")!, options: [:], completionHandler: nil)
         } else {
         //print("Can't use comgooglemaps://")
-            let latitude:CLLocationDegrees = 36.811336
-            let longitude:CLLocationDegrees = 3.236343
             let regionDistance:CLLocationDistance = 1000
             let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
             let regionSpan = MKCoordinateRegion.init(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
@@ -173,6 +242,22 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
     
     
     @IBAction func locateArrivalPoint(_ sender: UIButton) {
+        let latitude:CLLocationDegrees = ride.destination.latitude
+        let longitude:CLLocationDegrees = ride.destination.longitude
+        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+            UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(latitude),\(longitude)&zoom=14&views=traffic")!, options: [:], completionHandler: nil)
+        } else {
+            //print("Can't use comgooglemaps://")
+            let regionDistance:CLLocationDistance = 1000
+            let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+            let regionSpan = MKCoordinateRegion.init(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+            let options = [MKLaunchOptionsCameraKey : NSValue(mkCoordinate : regionSpan.center), MKLaunchOptionsMapSpanKey : NSValue(mkCoordinateSpan: regionSpan.span)]
+            
+            let placemark = MKPlacemark(coordinate:coordinates)
+            let mapItem = MKMapItem(placemark: placemark)
+            mapItem.name = "My House"
+            mapItem.openInMaps(launchOptions: options )
+        }
     }
     
     
@@ -187,24 +272,9 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
                     formatter.dateFormat = "dd/MM/yyyy HH:mm"
                     _ = formatter.string(from: dt)
                 }
-                print(date ?? "error")
                 if (date != nil)
                 {
-                    if (date! < Date())
-                    {
-                        let alert = UIAlertController(title: "Date erronnée", message: "Vous avez introduit une date passée", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler:nil))
-                        self.present(alert, animated: true)
-                    }else {
-                        self.dateNotif = date
-                        self.notif = true
-                        self.notifIcon.isHidden = false
-                        let dateReservation = "19/08/2019 15:15"
-                        let rider = "alaa"
-                        let identifier = "dateView_rappel"
-                        //let userActions = "User Actions"
-                        self.ajouterNotif(dateNotif: self.dateNotif, dateReservation: dateReservation, rider: rider, identifier: identifier)
-                    }
+                    self.validateNotif(url: self.URL_API, dateNotif: date!, dateReservation: self.ride.dateTime)
                 }
             }
         }else{
@@ -222,7 +292,7 @@ class ViewController: UIViewController,UNUserNotificationCenterDelegate {
         }
     }
     
-    func ajouterNotif(dateNotif:Date,dateReservation:String,rider:String,identifier:String){
+    func ajouterNotif (dateNotif:Date, dateReservation:String, rider:String, identifier:String){
         let content = UNMutableNotificationContent()
         content.title = "Resrvation client"
         content.subtitle = rider

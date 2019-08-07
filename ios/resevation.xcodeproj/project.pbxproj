@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,7 @@
 		0455782222EF107E00E575D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0455782122EF107E00E575D6 /* Assets.xcassets */; };
 		0455782A22EF872800E575D6 /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455782922EF872800E575D6 /* Modal.swift */; };
 		0455783222F042A000E575D6 /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455783122F042A000E575D6 /* DatePickerDialog.swift */; };
+		048EBCD922FAB1C7006B3A2E /* JSONParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048EBCD822FAB1C7006B3A2E /* JSONParsing.swift */; };
 		04C098B322EDE5A400134105 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C098B222EDE5A400134105 /* AppDelegate.swift */; };
 		04C098B522EDE5A400134105 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C098B422EDE5A400134105 /* ViewController.swift */; };
 		04C098B822EDE5A400134105 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04C098B622EDE5A400134105 /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 		0455782122EF107E00E575D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0455782922EF872800E575D6 /* Modal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modal.swift; sourceTree = "<group>"; };
 		0455783122F042A000E575D6 /* DatePickerDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
+		048EBCD822FAB1C7006B3A2E /* JSONParsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParsing.swift; sourceTree = "<group>"; };
 		04C098AF22EDE5A400134105 /* resevation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = resevation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C098B222EDE5A400134105 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04C098B422EDE5A400134105 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 		0485C29A22F826AE00AA9983 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				048EBCD822FAB1C7006B3A2E /* JSONParsing.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -118,7 +121,6 @@
 				8E9D24C65C380B3A01ACE6D6 /* Pods-resevation.debug.xcconfig */,
 				A5B4A7D74F6E1C8A250A4788 /* Pods-resevation.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -245,6 +247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				048EBCD922FAB1C7006B3A2E /* JSONParsing.swift in Sources */,
 				0455783222F042A000E575D6 /* DatePickerDialog.swift in Sources */,
 				0410089722F1BBB300E77C61 /* AFShaddowView.swift in Sources */,
 				04C098B522EDE5A400134105 /* ViewController.swift in Sources */,

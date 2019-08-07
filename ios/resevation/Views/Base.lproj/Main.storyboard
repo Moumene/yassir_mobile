@@ -455,6 +455,14 @@
                         <viewLayoutGuide key="safeArea" id="ElV-rT-a42"/>
                     </view>
                     <connections>
+                        <outlet property="AddressDestinationLabel" destination="7Qn-5U-7K2" id="VIQ-zH-8M1"/>
+                        <outlet property="AddressSourceLabel" destination="8Hi-Z4-FQN" id="z7g-wj-BLO"/>
+                        <outlet property="CostLabel" destination="YHi-sy-ycx" id="fgP-gd-GfR"/>
+                        <outlet property="IDLabel" destination="6qP-oN-JY9" id="Bh0-bs-RnN"/>
+                        <outlet property="NameLabel" destination="wCQ-tg-2pa" id="6R4-vm-msE"/>
+                        <outlet property="RatingLabel" destination="l8N-t3-H4j" id="GsR-Vj-CCO"/>
+                        <outlet property="TitleAddressDestinationLabel" destination="XIk-SA-6tU" id="B7O-HK-Xp1"/>
+                        <outlet property="TitleAddressSourceLabel" destination="bXa-1A-ej0" id="faD-VH-zXr"/>
                         <outlet property="callButton" destination="iMi-DX-9JI" id="PYd-mg-6e8"/>
                         <outlet property="dateLabel" destination="PMg-LL-hrm" id="L3J-LJ-Euu"/>
                         <outlet property="dateView" destination="Pxl-8J-oe1" id="ndD-Yr-aoz"/>
