@@ -6,6 +6,7 @@
 //  Copyright © 2019 Dregon Corp. All rights reserved.
 //
 
+
 import Foundation
 import SwiftyJSON
 
@@ -37,30 +38,35 @@ func parseRemote(filepath: String?) -> JSON?
     return nil
 }
 
-func parseRide(jsonObj: JSON) -> Ride
+func parseRide(jsonObj: JSON) -> Passenger
 {
-    var ride = Ride()
+    let ride = Ride()
+    let passenger = Passenger()
     
     ride.cost = jsonObj["cout_course"].intValue
     ride.id = jsonObj["ID"].stringValue
     
-    ride.passenger.fullName = jsonObj["rider"]["nom"].stringValue
-    ride.passenger.phoneNumber = jsonObj["rider"]["numTel"].stringValue
-    ride.passenger.rating = jsonObj["rider"]["note"].intValue
+    passenger.fullName = jsonObj["rider"]["nom"].stringValue
+    passenger.phoneNumber = jsonObj["rider"]["numTel"].stringValue
+    passenger.rating = jsonObj["rider"]["note"].intValue
     
-    ride.source.name = jsonObj["trajet"]["lieuDepart"].stringValue
-    ride.source.address = jsonObj["trajet"]["adressDepart"].stringValue
-    ride.source.latitude = jsonObj["trajet"]["latDepart"].doubleValue
-    ride.source.longitude = jsonObj["trajet"]["lonDepart"].doubleValue
+    ride.source = Location()
+    ride.source!.name = jsonObj["trajet"]["lieuDepart"].stringValue
+    ride.source!.address = jsonObj["trajet"]["adressDepart"].stringValue
+    ride.source!.latitude = jsonObj["trajet"]["latDepart"].doubleValue
+    ride.source!.longitude = jsonObj["trajet"]["lonDepart"].doubleValue
     
-    ride.destination.name = jsonObj["trajet"]["lieuDesti"].stringValue
-    ride.destination.address = jsonObj["trajet"]["adressDesti"].stringValue
-    ride.destination.latitude = jsonObj["trajet"]["latDesti"].doubleValue
-    ride.destination.longitude = jsonObj["trajet"]["lonDesti"].doubleValue
+    ride.destination = Location()
+    ride.destination!.name = jsonObj["trajet"]["lieuDesti"].stringValue
+    ride.destination!.address = jsonObj["trajet"]["adressDesti"].stringValue
+    ride.destination!.latitude = jsonObj["trajet"]["latDesti"].doubleValue
+    ride.destination!.longitude = jsonObj["trajet"]["lonDesti"].doubleValue
     
     ride.dateTime = parseTimestamp(timeStamp: jsonObj["dateHeur"].doubleValue)
     
-    return ride
+    passenger.rides.append(ride)
+    
+    return passenger
 }
 
 func parseTimestamp(timeStamp: Double) -> Date
@@ -68,7 +74,6 @@ func parseTimestamp(timeStamp: Double) -> Date
     let d = NSDate(timeIntervalSince1970:timeStamp)
     let date = Date(date: d)
     return date
-    
 }
 
 func parseDateToString(date: Date) -> String
@@ -86,33 +91,9 @@ func parseTimeToString(date: Date) -> String
     return result
 }
 
-struct Passenger
-{
-    var fullName = ""
-    var rating = 0
-    var phoneNumber = ""
-}
-
-struct Location
-{
-    var name = ""
-    var address = ""
-    var latitude = 0.0
-    var longitude = 0.0
-}
-
-struct Ride
-{
-    var passenger = Passenger()
-    var source = Location()
-    var destination = Location()
-    var cost = 0
-    var id = ""
-    var dateTime = Date()
-}
-
 extension Date {
     init(date: NSDate) {
         self.init(timeIntervalSinceReferenceDate: date.timeIntervalSinceReferenceDate)
     }
 }
+
