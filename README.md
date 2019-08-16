@@ -12,8 +12,8 @@ Yassir driver app by the interns
 
 - run 'pod init' in the ios folder 
 - copy the following lines in the "Podfile" :   
-  pod 'RealmSwift'
-  pod 'SwiftyJSON'
-  pod 'Alamofire'
-  pod 'SVProgressHUD'
+  - pod 'RealmSwift'
+  - pod 'SwiftyJSON'
+  - pod 'Alamofire'
+  - pod 'SVProgressHUD'
 - run 'pod install' in the ios folder 
